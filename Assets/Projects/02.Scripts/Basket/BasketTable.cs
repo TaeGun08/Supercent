@@ -4,34 +4,16 @@ using UnityEngine.AI;
 
 public class BasketTable : MonoBehaviour
 {
-    [SerializeField] private Transform[] targetsPos;
-    [SerializeField] private int maxActiveAI = 3;
-
-    private AIGenerator aiGenerator;
-    private Queue<AI> aiQueue = new Queue<AI>();
+    private Vector3 putDownPos;
+    private Stack<Bread> breads = new Stack<Bread>();
     
-    private void Start()
-    {
-        aiGenerator = AIGenerator.Instance;
-    }
-
-    [SerializeField] private int maxCustomerCount = 3;
-    
-    public void StartTable()
+    public void PickUpBread()
     {
         
     }
 
-    public void LeaveCustomer()
+    public void PutDownBread()
     {
-        aiQueue.Dequeue();
-    }
-    
-    private void LoadCustomer()
-    {
-        for (int i = aiQueue.Count; i < maxCustomerCount; i++)
-        {
-            aiQueue.Enqueue(aiGenerator.GetAI());
-        }
+        
     }
 }

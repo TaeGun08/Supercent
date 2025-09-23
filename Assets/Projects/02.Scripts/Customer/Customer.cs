@@ -3,7 +3,7 @@ using UnityEngine.AI;
 using System;
 using System.Collections;
 
-public class AI : MonoBehaviour
+public class Customer : MonoBehaviour
 {
     private NavMeshAgent agent;
 
