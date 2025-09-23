@@ -38,6 +38,7 @@ public class CustomerGenerator : MonoBehaviour
         if (pool.Count <= 0) return CreateCustomer();
         
         Customer customer = pool.Dequeue();
+        customer.transform.position = transform.position;
         customer.gameObject.SetActive(true);
         return customer;
     }

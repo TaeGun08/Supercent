@@ -7,6 +7,7 @@ public class BreadGenerator : MonoBehaviour
 {
     [Header("BreadGenerator Settings")]
     [SerializeField] private Bread breadPrefab;
+    [SerializeField] private Transform bakeTransform;
     [SerializeField] private int initialSize = 10;
     [SerializeField] private int maxBake = 10;
     
@@ -31,10 +32,10 @@ public class BreadGenerator : MonoBehaviour
         
         while (true)
         {
+            yield return wait;
+            
             if (bakeBreads.Count >= maxBake) continue;
             bakeBreads.Enqueue(GetBread());
-            
-            yield return wait;
         }
     }
     
@@ -43,7 +44,7 @@ public class BreadGenerator : MonoBehaviour
     /// </summary>
     private Bread CreateBread()
     {
-        Bread bread = Instantiate(breadPrefab, transform.position, Quaternion.identity, transform);
+        Bread bread = Instantiate(breadPrefab, bakeTransform.position, Quaternion.identity, transform);
         bread.BakeBread();
         return bread;
     }
@@ -56,6 +57,7 @@ public class BreadGenerator : MonoBehaviour
         if (pool.Count <= 0) return CreateBread();
         
         Bread bread = pool.Dequeue();
+        bread.transform.position = bakeTransform.position;
         bread.gameObject.SetActive(true);
         bread.BakeBread();
         return bread;

@@ -39,6 +39,6 @@ public class Bread : MonoBehaviour
 
     public void BakeBread()
     {
-        rigidbody.AddForce(-Vector3.forward * 5f, ForceMode.Impulse);
+        rigidbody.AddForce(-Vector3.forward * 4f, ForceMode.Impulse);
     }
 }

@@ -10,28 +10,32 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : MonoBehavi
     {
         get
         {
-            if (instance != null) return instance;
-            instance = FindObjectOfType<T>();
+            if (instance == null)
+            {
+                instance = FindObjectOfType<T>();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject(typeof(T).Name);
+                    instance = obj.AddComponent<T>();
+                }
+                
+                DontDestroyOnLoad(instance);
+                return instance;
+            }
 
-            if (instance != null) return instance;
-            GameObject obj = new GameObject(typeof(T).Name);
-            instance = obj.AddComponent<T>();
-
-            DontDestroyOnLoad(instance);
             return instance;
         }
     }
 
     protected virtual void Awake()
     {
-        if (instance == null)
-        {
-            instance = this as T;
-            DontDestroyOnLoad(instance);
-        }
-        else
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+        
+        instance = this as T;
+        DontDestroyOnLoad(gameObject);
     }
 }
