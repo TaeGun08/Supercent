@@ -13,6 +13,7 @@ public class Oven : OnTriggerInteraction
     {
         base.OnTriggerEnter(other);
 
+        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
         inside = true;
 
         StartCoroutine(PickupBreadCoroutine(other.gameObject.GetComponent<BreadHandler>()));
@@ -24,18 +25,17 @@ public class Oven : OnTriggerInteraction
 
         while (breadHandler != null && inside)
         {
-            Debug.Log("돌고 있다");
             yield return wait;
             if (breadGenerator.BakeBreads.Count <= 0) continue;
             breadHandler?.PickupBread(breadGenerator.BakeBreads.Dequeue());
         }
-
-        Debug.Log("나감");
     }
 
     protected override void OnTriggerExit(Collider other)
     {
         base.OnTriggerExit(other);
+        
+        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
         inside = false;
     }
 }

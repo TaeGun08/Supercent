@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,10 @@ public class JoyStickController : SingletonBehaviour<JoyStickController>
     [SerializeField] private RectTransform background;  
     [SerializeField] private RectTransform handle;      
     [SerializeField] private RectTransform touchPoint;
-
-    [SerializeField] private float radius;
+    [Space]
     [SerializeField] private float handleSpeed;
+    
+    private float radius;
     
     private Vector3 startPos;
     private Vector3 dragDirection;
@@ -38,6 +40,8 @@ public class JoyStickController : SingletonBehaviour<JoyStickController>
         background.position = startPos;
         handle.position = startPos;
         touchPoint.position = startPos;
+        
+        radius = background.sizeDelta.x * 0.216f;
     }
     
     /// <summary>

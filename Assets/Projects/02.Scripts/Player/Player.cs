@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerStatus
 {
     public float MoveSpeed;
+    public float Gravity;
 }
 
 public class Player : BreadHandler

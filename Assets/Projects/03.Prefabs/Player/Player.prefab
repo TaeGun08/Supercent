@@ -348,8 +348,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3179164372799309438}
-  - component: {fileID: 4350259179132385835}
-  - component: {fileID: 8013438035302596154}
+  - component: {fileID: 2633466788792345507}
   - component: {fileID: 3532472749383528088}
   - component: {fileID: 8714099656771853759}
   m_Layer: 3
@@ -377,24 +376,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &4350259179132385835
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2834305181258587332}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
---- !u!136 &8013438035302596154
-CapsuleCollider:
+--- !u!143 &2633466788792345507
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -403,9 +386,13 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  serializedVersion: 2
   m_Height: 2
-  m_Direction: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &3532472749383528088
 MonoBehaviour:
@@ -423,6 +410,7 @@ MonoBehaviour:
   yStep: 0.4
   playerStatus:
     MoveSpeed: 4
+    Gravity: -10
 --- !u!114 &8714099656771853759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,6 +424,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTime: 0.01
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0.1
 --- !u!1 &2851124967732601567
 GameObject:
   m_ObjectHideFlags: 0
