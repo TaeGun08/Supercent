@@ -152,7 +152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226033063
 GameObject:
@@ -231,6 +231,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226033063}
   m_CullTransparentMesh: 1
+--- !u!1 &228567026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 228567028}
+  - component: {fileID: 228567027}
+  m_Layer: 0
+  m_Name: BreadGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &228567027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228567026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9db43d7902577ba49a0af0ef904f0519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breadPrefab: {fileID: -6469212149921884928, guid: 2943c92e2036f5248870f04db5b19ef6, type: 3}
+  bakeTransform: {fileID: 1395544472}
+  initialSize: 10
+  maxBake: 10
+--- !u!4 &228567028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228567026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.69, y: 0.5, z: 12.87}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &239872551
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +325,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &239872555
 MonoBehaviour:
@@ -516,7 +564,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 50
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -657,7 +705,7 @@ RectTransform:
   m_Children:
   - {fileID: 1835547382}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -740,7 +788,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1249210882
 MonoBehaviour:
@@ -754,6 +802,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db024fcaae42d0046b0ab08a0c8f3acb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BreadCount: 20
+  basketTable: {fileID: 1440681240}
+--- !u!4 &1395544472 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1864602443, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+  m_PrefabInstance: {fileID: 6468859745525847757}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1440681240 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1858957493, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
@@ -948,7 +1003,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1778133615
 MonoBehaviour:
@@ -962,8 +1017,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f0c236e1ba85574e940f41c2def9b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerGenerator: {fileID: 1178837647}
-  basketTable: {fileID: 1440681240}
 --- !u!1 &1801973348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1132,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6468859745525847757
 PrefabInstance:

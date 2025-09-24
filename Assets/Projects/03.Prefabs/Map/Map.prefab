@@ -42,7 +42,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 833585525}
-  - component: {fileID: 242871484}
   m_Layer: 0
   m_Name: Oven
   m_TagString: Untagged
@@ -69,22 +68,6 @@ Transform:
   m_Father: {fileID: 6468859744991597206}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &242871484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833585524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db43d7902577ba49a0af0ef904f0519, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  breadPrefab: {fileID: -6469212149921884928, guid: 2943c92e2036f5248870f04db5b19ef6, type: 3}
-  bakeTransform: {fileID: 1864602443}
-  initialSize: 10
-  maxBake: 10
 --- !u!1 &1288606539
 GameObject:
   m_ObjectHideFlags: 0

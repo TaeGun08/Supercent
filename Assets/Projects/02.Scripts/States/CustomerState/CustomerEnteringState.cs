@@ -4,25 +4,40 @@ using UnityEngine;
 
 public class CustomerEnteringState : CustomerStateBase
 {
+    private Transform centerPoint; 
+    private Transform breadTablePoint; 
+
+    private bool reachedCenter;
+
     public override void StateEnter()
     {
-        StartCoroutine(MoveCheckCoroutine());
+        centerPoint = InGameManager.Instance.transform;
+        breadTablePoint = BreadManager.Instance.BasketTable.GetAvailableSlot();
+
+        Agent.isStopped = false;
+        Agent.SetDestination(centerPoint.position);
     }
 
-    private IEnumerator MoveCheckCoroutine()
+    public override void OnUpdate()
     {
-        Agent.SetDestination(InGameManager.Instance.transform.position);
-        
-        WaitForSeconds wait = new WaitForSeconds(1f);
-        while (Agent.pathPending)
+        if (!Agent.pathPending && Agent.remainingDistance <= Agent.stoppingDistance)
         {
-            yield return wait;
+            if (!reachedCenter)
+            {
+                reachedCenter = true;
+                Agent.SetDestination(breadTablePoint.position);
+            }
+            else
+            {
+                Controller.ChangeState<CustomerPickingBreadState>();
+            }
         }
-        
-        Controller.ChangeState<CustomerSelectingBreadState>();
     }
-    
+
     public override void StateExit()
     {
+        breadTablePoint = null;
+        reachedCenter = false;
+        Agent.isStopped = true;
     }
 }

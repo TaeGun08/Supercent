@@ -10,6 +10,13 @@ public abstract class CustomerStateBase : MonoBehaviour
     public Rigidbody Rigidbody { get; private set; }
     public NavMeshAgent Agent { get; private set; }
     
+    protected InGameManager InGameManager { get; private set; }
+
+    protected virtual void Start()
+    {
+        InGameManager = InGameManager.Instance;
+    }
+    
     public virtual void Initialize(CustomerContext context)
     {
         Controller = context.Controller;
@@ -19,5 +26,8 @@ public abstract class CustomerStateBase : MonoBehaviour
     }
     
     public abstract void StateEnter();
+
+    public virtual void OnUpdate() {}
+
     public abstract void StateExit();
 }

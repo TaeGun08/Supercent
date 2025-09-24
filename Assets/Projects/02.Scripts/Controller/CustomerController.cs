@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,9 +36,18 @@ public class CustomerController : MonoBehaviour
         }
         
         currentState = states[0];
+    }
+
+    private void OnEnable()
+    {
         currentState?.StateEnter();
     }
-    
+
+    private void Update()
+    {
+        currentState?.OnUpdate();
+    }
+
     public void ChangeState<T>() where T : CustomerStateBase
     {
         if (enabled == false) return;

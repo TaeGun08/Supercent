@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomerExitingState : CustomerStateBase
+public class CustomerPickingBreadState : CustomerStateBase
 {
     public override void StateEnter()
     {

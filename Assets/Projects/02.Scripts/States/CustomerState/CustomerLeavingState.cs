@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomerPayingState : CustomerStateBase
+public class CustomerLeavingState : CustomerStateBase
 {
     public override void StateEnter()
     {

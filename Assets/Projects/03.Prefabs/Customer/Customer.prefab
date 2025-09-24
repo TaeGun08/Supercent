@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 181939095}
   - component: {fileID: 181939096}
   m_Layer: 0
-  m_Name: CustomerExitingState
+  m_Name: CustomerWaitingCheckoutState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1534248551}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &181939096
 MonoBehaviour:
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 452680407}
   - component: {fileID: 452680408}
   m_Layer: 0
-  m_Name: CustomerSelectingBreadState
+  m_Name: CustomerWaitingBreadState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1534248551}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &452680408
 MonoBehaviour:
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 1164927612}
   - component: {fileID: 1164927613}
   m_Layer: 0
-  m_Name: CustomerDiningState
+  m_Name: CustomerCheckingOutState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -162,7 +162,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1534248551}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1164927613
 MonoBehaviour:
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 1362971277}
   - component: {fileID: 1362971278}
   m_Layer: 0
-  m_Name: CustomerPayingState
+  m_Name: CustomerPickingBreadState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,7 +206,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1534248551}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1362971278
 MonoBehaviour:
@@ -249,10 +249,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 609119618}
-  - {fileID: 452680407}
   - {fileID: 1362971277}
-  - {fileID: 181939095}
+  - {fileID: 452680407}
   - {fileID: 1164927612}
+  - {fileID: 181939095}
+  - {fileID: 299689980155193636}
   m_Father: {fileID: 5373304380684513424}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -288,6 +289,50 @@ Transform:
   m_Father: {fileID: 9148150846150853597}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -1.0301241, y: -7.0136595, z: -6.9754076}
+--- !u!1 &421608478218837390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 299689980155193636}
+  - component: {fileID: 1553165924806784368}
+  m_Layer: 0
+  m_Name: CustomerLeavingState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &299689980155193636
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421608478218837390}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1534248551}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1553165924806784368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421608478218837390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 836ea3e9737fc614cae00bf4e1764ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &524510965671118280
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5373304380684513424
 Transform:
   m_ObjectHideFlags: 0
@@ -852,6 +897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a644710ae25244298e11c1af4b29c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  breadMaxCount: 3
 --- !u!114 &-610901433195965272
 MonoBehaviour:
   m_ObjectHideFlags: 0

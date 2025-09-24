@@ -5,11 +5,11 @@ using UnityEngine;
 public class Bread : MonoBehaviour
 {
     private Vector3 targetPos;
-    private Rigidbody rigidbody;
+    private Rigidbody rigid;
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigid = GetComponent<Rigidbody>();
     }
     
     private void OnDisable()
@@ -19,14 +19,14 @@ public class Bread : MonoBehaviour
 
     public void SetEvent(Vector3 pos)
     {
-        BreadManager.Instance.BreadEvent += BreadMovement;
         targetPos = pos;
+        BreadManager.Instance.BreadEvent += BreadMovement;
     }
 
     private void RemoveEvent()
     {
-        BreadManager.Instance.BreadEvent -= BreadMovement;
         targetPos = Vector3.zero;
+        BreadManager.Instance.BreadEvent -= BreadMovement;
     }
     
     private void BreadMovement()
@@ -39,6 +39,6 @@ public class Bread : MonoBehaviour
 
     public void BakeBread()
     {
-        rigidbody.AddForce(-Vector3.forward * 4f, ForceMode.Impulse);
+        rigid.AddForce(-Vector3.forward * 4f, ForceMode.Impulse);
     }
 }
