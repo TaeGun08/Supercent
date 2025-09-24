@@ -611,6 +611,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0
+  player: {fileID: 1028047315}
+--- !u!114 &1028047315 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3532472749383528088, guid: 43b1efac09bc84e43b0688e730652dff, type: 3}
+  m_PrefabInstance: {fileID: 8714099656771853757}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744f66ffa655d184c875e1ab15e12c6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1030916809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,6 +1153,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 545357328, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+      propertyPath: breadGenerator
+      value: 
+      objectReference: {fileID: 228567027}
     - target: {fileID: 6468859744991597206, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1245,6 +1261,10 @@ PrefabInstance:
     - target: {fileID: 3179164372799309438, guid: 43b1efac09bc84e43b0688e730652dff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3532472749383528088, guid: 43b1efac09bc84e43b0688e730652dff, type: 3}
+      propertyPath: playerStatus.MoveSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43b1efac09bc84e43b0688e730652dff, type: 3}

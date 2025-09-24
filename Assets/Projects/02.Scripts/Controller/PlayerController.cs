@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Player player;
-    private CharacterController characterController;
+    private Rigidbody rigid;
     
     private JoyStickController joyStickController;
 
@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<Player>();
-        characterController = GetComponent<CharacterController>();
+        rigid = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, angle, 0f);
         
         Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+        Vector3 movePosition = transform.position + moveDirection.normalized * (player.PlayerStatus.MoveSpeed * Time.deltaTime);
 
-        characterController.Move(moveDirection.normalized * (player.PlayerStatus.MoveSpeed * Time.deltaTime));
+        rigid.MovePosition(movePosition);
     }
 }

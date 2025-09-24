@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class FollowCamera : SingletonBehaviour<FollowCamera>
 {
-    private Player player;
     private Vector3 offset;
 
-    [Header("FollowCamera")] [SerializeField]
-    private float duration;
+    [Header("FollowCamera")] 
+    [SerializeField] private float duration;
+    [SerializeField] private Player player;
     
     private void Start()
     {
-        player = Player.Instance;
         offset = transform.position;
     }
 

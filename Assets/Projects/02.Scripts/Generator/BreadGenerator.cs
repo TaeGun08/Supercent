@@ -10,8 +10,8 @@ public class BreadGenerator : MonoBehaviour
     [SerializeField] private Transform bakeTransform;
     [SerializeField] private int initialSize = 10;
     [SerializeField] private int maxBake = 10;
-    
-    private Queue<Bread> bakeBreads = new Queue<Bread>();
+
+    public Queue<Bread> BakeBreads { get; private set; } = new Queue<Bread>();
     public GenericPool<Bread> BreadPool { get; private set; }
     
     private void Awake()
@@ -29,10 +29,10 @@ public class BreadGenerator : MonoBehaviour
         {
             yield return wait;
             
-            if (bakeBreads.Count >= maxBake) continue;
+            if (BakeBreads.Count >= maxBake) continue;
             Bread bread = BreadPool.Get(bakeTransform.position, Quaternion.identity);
             bread.BakeBread();
-            bakeBreads.Enqueue(bread);
+            BakeBreads.Enqueue(bread);
         }
     }
 }

@@ -1,40 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Bread : MonoBehaviour
 {
-    private Vector3 targetPos;
+    private Transform targetTrs;
+    private float curYStep;
+    
     private Rigidbody rigid;
+    private Collider collider;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        collider = GetComponent<Collider>();
     }
     
     private void OnDisable()
     {
-        RemoveEvent();
+        rigid.isKinematic = false;
+        collider.isTrigger = false;
+        Remove();
     }
 
-    public void SetEvent(Vector3 pos)
+    public void SetBread(Transform targetTrs, float yStep)
     {
-        targetPos = pos;
-        BreadManager.Instance.BreadEvent += BreadMovement;
+        rigid.isKinematic = true;
+        collider.isTrigger = true;
+
+        this.targetTrs = targetTrs;
+        curYStep = yStep;
+        
+        transform.SetParent(targetTrs);
+        
+        BreadManager.Instance.BreadEvent += BreadEvent;
     }
 
-    private void RemoveEvent()
+    private void Remove()
     {
-        targetPos = Vector3.zero;
-        BreadManager.Instance.BreadEvent -= BreadMovement;
+        targetTrs = null;
+        curYStep = 0f;
+        BreadManager.Instance.BreadEvent -= BreadEvent;
     }
+
+    private void BreadEvent()
+    {
+        Vector3 targetPosition = targetTrs.position + new Vector3(0f, curYStep, 0f);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 10f);
     
-    private void BreadMovement()
-    {
-        float distance = Vector3.Distance(transform.position, targetPos);
-        transform.position = Vector3.Slerp(transform.position, targetPos, Time.deltaTime * 10f);
-        if (distance > 0.1f) return;
-        RemoveEvent();
+        Quaternion targetRotation = targetTrs.rotation * Quaternion.Euler(0, 90f, 0);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+    
+        if (Vector3.Distance(transform.position, targetPosition) < 0.01f
+            && Quaternion.Angle(transform.rotation, targetRotation) < 0.5f)
+        {
+            Remove();
+        }
     }
 
     public void BakeBread()

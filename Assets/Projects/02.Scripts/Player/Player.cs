@@ -6,15 +6,11 @@ using UnityEngine;
 public class PlayerStatus
 {
     public float MoveSpeed;
-    public float PickUpSpeed;
-    public float PutDownSpeed;
 }
 
-public class Player : SingletonBehaviour<Player>
+public class Player : BreadHandler
 {
     [Header("PlayerStatus Settings")]
     [SerializeField] private PlayerStatus playerStatus;
     public PlayerStatus PlayerStatus => playerStatus;
-    
-    
 }

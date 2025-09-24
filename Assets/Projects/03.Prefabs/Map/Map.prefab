@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 425016411}
+  - component: {fileID: 957374297}
   m_Layer: 0
   m_Name: POSTable
   m_TagString: Untagged
@@ -33,6 +34,18 @@ Transform:
   m_Father: {fileID: 6468859744991597206}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &957374297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425016410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4963b7a5d72484387e0926fccb103c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &833585524
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,6 +55,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 833585525}
+  - component: {fileID: 545357328}
+  - component: {fileID: 545357329}
   m_Layer: 0
   m_Name: Oven
   m_TagString: Untagged
@@ -68,6 +83,34 @@ Transform:
   m_Father: {fileID: 6468859744991597206}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &545357328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833585524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f857a82d8db46b340a9c941462a4ecd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plane: {fileID: 1558343086}
+  planeScaleSize: 0.15
+  breadGenerator: {fileID: 0}
+--- !u!65 &545357329
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833585524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 1, z: 5}
+  m_Center: {x: 0, y: 1, z: -1.2}
 --- !u!1 &1288606539
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +362,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plane: {fileID: 1875053715}
+  planeScaleSize: 0.15
+  startPos: {x: -6.15, y: 1.4, z: 4.6}
+  xStep: 0.5
+  zStep: 0.4
+  yStep: -1
   targetPos:
   - {fileID: 1941117415}
   - {fileID: 1288606540}
@@ -982,7 +1030,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3534827287417909797, guid: ccf0287e4ad9bdd44a8e1f8fbcc92cf1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3534827287417909797, guid: ccf0287e4ad9bdd44a8e1f8fbcc92cf1, type: 3}
       propertyPath: m_StaticEditorFlags

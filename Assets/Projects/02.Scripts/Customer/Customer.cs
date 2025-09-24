@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using System;
-using System.Collections;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Customer : MonoBehaviour
