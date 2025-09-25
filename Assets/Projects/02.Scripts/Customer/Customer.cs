@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class Customer : MonoBehaviour
+public class Customer : BreadHandler
 {
     public NavMeshAgent Agent { get; private set; }
     public CustomerController CustomerController { get; private set; }

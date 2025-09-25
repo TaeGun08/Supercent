@@ -1,29 +1,66 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class BasketTable : OnTriggerInteraction
 {
-    private Stack<Bread> breads = new Stack<Bread>();
-    
-    [Space]
+    public Stack<Bread> Breads { get; private set; } = new Stack<Bread>();
+
+    [Space] 
     [Header("BasketTable Settings")]
     [SerializeField] private Vector3 startPos;
     [SerializeField] private float xStep = 0.5f;
     [SerializeField] private float zStep = -1f;
     [SerializeField] private float yStep = 0.5f;
-    [Space]
+    [Space] 
     [SerializeField] private Transform[] targetPos;
+    [SerializeField] private int maxBread;
 
     private bool[] slotOccupied;
+
+    private bool inside = true;
 
     private void Awake()
     {
         slotOccupied = new bool[targetPos.Length];
     }
-    
+
+    protected override void TriggerEnter(Collider other)
+    {
+        if (Breads.Count >= maxBread) return;
+        
+        inside = true;
+        BreadHandler breadHandler = other.gameObject.GetComponent<BreadHandler>();
+        StartCoroutine(PickupBreadCoroutine(breadHandler));
+    }
+
+    private IEnumerator PickupBreadCoroutine(BreadHandler breadHandler)
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.1f);
+
+        while (breadHandler != null && inside && !(Breads.Count >= maxBread))
+        {
+            yield return wait;
+            if (breadHandler.BreadStack.Count <= 0) continue;
+            PutDown(breadHandler.PutDownBread());
+        }
+    }
+
+    protected override void TriggerExit(Collider other)
+    {
+        inside = false;
+        
+        if (Breads.Count <= 0) return;
+        
+        CustomerController customer = InGameManager.Instance.FirstBreadCustomer();
+
+        if (customer != null)
+        {
+            customer.ChangeState<CustomerPickingBreadState>();
+        }
+    }
+
     public Transform GetAvailableSlot()
     {
         for (int i = 0; i < slotOccupied.Length; i++)
@@ -34,7 +71,7 @@ public class BasketTable : OnTriggerInteraction
                 return targetPos[i];
             }
         }
-        
+
         return null;
     }
 
@@ -50,30 +87,30 @@ public class BasketTable : OnTriggerInteraction
         }
     }
 
-    public Vector3 GetPutDownPos()
+    private Vector3 GetPutDownPos()
     {
-        int count = breads.Count;
-
+        int count = Breads.Count;
+        
         int perRow = 3;
         int perLayer = 6;
-
+        
         int layer = count / perLayer;
-        int row = (count % perLayer) / perRow;
-        int col = count % perRow;
-
+        int rowInLayer = (count % perLayer) / perRow;
+        int colInRow = count % perRow;
+        
         Vector3 pos = startPos;
-        pos.x += col * xStep;
-        pos.z += row * zStep;
+        pos.x += colInRow * xStep;
+        pos.z += rowInLayer * zStep;
         pos.y += layer * yStep;
-
+        
         return pos;
     }
 
-    public void PickUpPos()
+    private void PickUpPos()
     {
-        if (breads.Count == 0) return;
+        if (Breads.Count == 0) return;
 
-        int count = breads.Count - 1;
+        int count = Breads.Count - 1;
         int perRow = 3;
         int perLayer = 6;
 
@@ -82,21 +119,24 @@ public class BasketTable : OnTriggerInteraction
         int col = count % perRow;
 
         Vector3 pos = startPos;
-        pos.x += col * xStep;
-        pos.z += row * zStep;
-        pos.y += layer * yStep;
+        pos.x -= col * xStep;
+        pos.z -= row * zStep;
+        pos.y -= layer * yStep;
     }
 
-    public void PutDown(Bread bread)
+    private void PutDown(Bread bread)
     {
-        breads.Push(bread);
-        bread.transform.position = GetPutDownPos();
+        Vector3 pos = GetPutDownPos();
+        
+        bread.SetBread(pos, pos.y, -35f, transform);
+        
+        Breads.Push(bread);
     }
 
     public Bread PickUp()
     {
-        if (breads.Count == 0) return null;
+        if (Breads.Count == 0) return null;
         PickUpPos();
-        return breads.Pop();
+        return Breads.Pop();
     }
 }

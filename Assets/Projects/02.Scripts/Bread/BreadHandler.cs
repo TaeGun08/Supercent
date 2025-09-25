@@ -7,8 +7,11 @@ public abstract class BreadHandler : MonoBehaviour
     public Stack<Bread> BreadStack { get; private set; } = new Stack<Bread>();
 
     [Header("BreadHandler Settings")]
-    [SerializeField] private Transform handPos;
+    [SerializeField] private Transform handTrs;
     [SerializeField] private float yStep = 0.4f;
+    [SerializeField] private int maxBread;
+
+    public bool MaxBread => maxBread <= BreadStack.Count;
 
     public void PickupBread(Bread bread)
     {
@@ -16,11 +19,11 @@ public abstract class BreadHandler : MonoBehaviour
         int index = BreadStack.Count - 1;
         float yOffset = index * yStep;
         
-        bread.SetBread(handPos, yOffset);
+        bread.SetBread(handTrs, yOffset, 90f, handTrs);
     }
 
     public Bread PutDownBread()
     {
-        return BreadStack.Count == 0 ? null : BreadStack.Pop();
+        return BreadStack.Count == 0 ?  null : BreadStack.Pop();
     }
 }

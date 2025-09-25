@@ -9,21 +9,22 @@ public class Oven : OnTriggerInteraction
 
     private bool inside;
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void TriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-
-        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
+        BreadHandler breadHandler = other.gameObject.GetComponent<BreadHandler>();
+        
+        if (breadHandler.MaxBread) return;
+        
         inside = true;
-
-        StartCoroutine(PickupBreadCoroutine(other.gameObject.GetComponent<BreadHandler>()));
+        
+        StartCoroutine(PickupBreadCoroutine(breadHandler));
     }
-
+    
     private IEnumerator PickupBreadCoroutine(BreadHandler breadHandler)
     {
         WaitForSeconds wait = new WaitForSeconds(0.1f);
 
-        while (breadHandler != null && inside)
+        while (breadHandler != null && inside && !breadHandler.MaxBread)
         {
             yield return wait;
             if (breadGenerator.BakeBreads.Count <= 0) continue;
@@ -31,11 +32,8 @@ public class Oven : OnTriggerInteraction
         }
     }
 
-    protected override void OnTriggerExit(Collider other)
+    protected override void TriggerExit(Collider other)
     {
-        base.OnTriggerExit(other);
-        
-        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
         inside = false;
     }
 }

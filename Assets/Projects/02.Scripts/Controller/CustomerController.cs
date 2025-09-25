@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class CustomerContext
 {
+    public Customer Customer { get; set; }
     public CustomerController Controller { get; set; }
     public Animator Animator { get; set; }
     public Rigidbody Rigidbody { get; set; }
@@ -22,6 +23,7 @@ public class CustomerController : MonoBehaviour
     {
         var context = new CustomerContext()
         {
+            Customer = GetComponent<Customer>(),
             Controller = this,
             Animator = GetComponentInChildren<Animator>(),
             Rigidbody = GetComponent<Rigidbody>(),

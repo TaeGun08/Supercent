@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class POSTable : MonoBehaviour
+public class PaperBag : DOCurveMovement
 {
-    //[SerializeField] private 
+    
 }

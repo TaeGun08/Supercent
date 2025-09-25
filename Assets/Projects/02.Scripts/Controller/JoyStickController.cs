@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JoyStickController : SingletonBehaviour<JoyStickController>
+public class JoyStickController : MonoBehaviour
 {
     [Header("JoyController")]
     [SerializeField] private RectTransform background;  
@@ -71,8 +71,11 @@ public class JoyStickController : SingletonBehaviour<JoyStickController>
 
     public Vector2 DragDirection()
     {
+        if (radius <= 0f)
+            return Vector2.zero;
+    
         Vector2 normalized = new Vector2(dragDirection.x, dragDirection.y) / radius;
-        return  Vector2.ClampMagnitude(normalized, 1f);;
+        return Vector2.ClampMagnitude(normalized, 1f);
     }
 }
 

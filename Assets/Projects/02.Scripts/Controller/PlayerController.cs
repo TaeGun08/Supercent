@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        joyStickController = JoyStickController.Instance;
+        joyStickController = InGameManager.Instance.JoyStickController;
     }
 
     private void Update()
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private void MovementAndRotation()
     {
         Vector2 inputVec = joyStickController.DragDirection();
-
+        
         if (inputVec.sqrMagnitude < 0.01f) return;
         
         inputVec.Normalize();

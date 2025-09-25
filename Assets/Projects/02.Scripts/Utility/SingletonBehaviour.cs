@@ -6,21 +6,25 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : MonoBehavi
 {
     protected static T instance;
 
+    protected static bool IsQuitting = false;
+    
     public static T Instance
     {
         get
         {
             if (instance == null)
             {
+                if (!Application.isPlaying || IsQuitting) 
+                    return null;
+                
                 instance = FindObjectOfType<T>();
                 if (instance == null)
                 {
                     GameObject obj = new GameObject(typeof(T).Name);
                     instance = obj.AddComponent<T>();
                 }
-                
-                //DontDestroyOnLoad(instance);
-                return instance;
+                    
+                DontDestroyOnLoad(instance);
             }
 
             return instance;
@@ -36,6 +40,17 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : MonoBehavi
         }
         
         instance = this as T;
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
+    }
+    
+    protected virtual void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
+    }
+    
+    protected virtual void OnApplicationQuit()
+    {
+        IsQuitting = true;
     }
 }
