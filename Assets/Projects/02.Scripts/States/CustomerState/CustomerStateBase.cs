@@ -12,8 +12,6 @@ public abstract class CustomerStateBase : MonoBehaviour
     public NavMeshAgent Agent { get; private set; }
 
     protected InGameManager InGameManager;
-
-    protected Transform moveTrs;
     
     protected virtual void Start()
     {

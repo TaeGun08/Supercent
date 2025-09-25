@@ -17,6 +17,7 @@ public class CustomerContext
 public class CustomerController : MonoBehaviour
 {
     private CustomerStateBase currentState;
+    public CustomerStateBase CurrentState => currentState;
     private CustomerStateBase[] states;
     
     private void Awake()

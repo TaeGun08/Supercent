@@ -14,16 +14,15 @@ public class CustomerPickingBreadState : CustomerStateBase
     {
         if (Customer.BreadStack.Count >= Customer.PickingBreadCount)
         {
-            Controller.ChangeState<CustomerCheckingOutState>();
-            InGameManager.BasketTable.ReleaseSlot(moveTrs);
-            InGameManager.GoCheckOutCustomer();
+            InGameManager.BasketTable.ReleaseSlot(Customer.MoveTargetTrs);
+            InGameManager.GoCheckOutOrEatingCustomer(0);
+            Controller.ChangeState<CustomerDecisionState>();
             return;
         }
         
         if (InGameManager.BasketTable.Breads.Count <= 0)
         {
             Controller.ChangeState<CustomerWaitingBreadState>();
-            InGameManager.BreadWaitingCustomers.Enqueue(Controller);
             return;
         }
         

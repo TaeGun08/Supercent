@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class CustomerEnteringState : CustomerStateBase
 {
-    private Transform centerPoint; 
+    private Transform centerPoint;
 
     private bool reachedCenter;
 
     public override void StateEnter()
     {
         centerPoint = InGameManager.Instance.transform;
-        moveTrs = InGameManager.Instance.BasketTable.GetAvailableSlot();
 
-        Agent.isStopped = false;
+        Transform trs = InGameManager.Instance.BasketTable.GetAvailableSlot();
+        Customer.MoveTargetTrs = trs;
+        
         Agent.SetDestination(centerPoint.position);
     }
 
@@ -24,7 +25,8 @@ public class CustomerEnteringState : CustomerStateBase
         if (!reachedCenter)
         {
             reachedCenter = true;
-            Agent.SetDestination(moveTrs.position);
+            Agent.SetDestination(Customer.MoveTargetTrs.position);
+            InGameManager.WaitingCustomers[0].Enqueue(Controller);
         }
         else
         {
@@ -35,6 +37,5 @@ public class CustomerEnteringState : CustomerStateBase
     public override void StateExit()
     {
         reachedCenter = false;
-        Agent.isStopped = true;
     }
 }

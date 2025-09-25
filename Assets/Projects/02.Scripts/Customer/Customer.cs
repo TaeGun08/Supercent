@@ -11,6 +11,8 @@ public class Customer : BreadHandler
     private int breadMaxCount;
     public int PickingBreadCount { get; private set; }
     
+    public Transform MoveTargetTrs { get; set; }
+    
     private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();

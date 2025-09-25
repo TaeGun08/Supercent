@@ -5,52 +5,67 @@ using UnityEngine;
 
 public class InGameManager : SingletonBehaviour<InGameManager>
 {
-    [Header("JoyStick")]
-    [SerializeField] private JoyStickController joyStickController;
+    [Header("JoyStick")] [SerializeField] private JoyStickController joyStickController;
     public JoyStickController JoyStickController => joyStickController;
-    
-    [Space]
-    [Header("BasketTable")]
-    [SerializeField] private BasketTable basketTable;
-    public BasketTable BasketTable => basketTable;
-    
-    [Space]
-    [Header("Generator")]
-    [SerializeField] private CustomerGenerator customerGenerator;
-    
-    public Queue<CustomerController> BreadWaitingCustomers { get; private set; } = new Queue<CustomerController>();
-    public Queue<CustomerController> CheckOutWaitingCustomers { get; private set; } = new Queue<CustomerController>();
 
-    private CustomerController breadWaitingCustomer;
-    private CustomerController checkOutWaitingCustomer;
-    
-    [Space]
-    [Header("Customer Info")]
+    [Space] [Header("BasketTable")] [SerializeField]
+    private BasketTable basketTable;
+
+    public BasketTable BasketTable => basketTable;
+
+    [Space] [Header("POSTable")] [SerializeField]
+    private POSTable pOSTable;
+
+    public POSTable POSTable => pOSTable;
+
+    [Space] [Header("Generator")] [SerializeField]
+    private CustomerGenerator customerGenerator;
+
+    public List<Queue<CustomerController>> WaitingCustomers { get; private set; } =
+        new List<Queue<CustomerController>>();
+
+    private CustomerController[] waitingCustomer;
+
+    [Space] [Header("Customer Info")] [SerializeField]
+    private int waitingCustomerSize;
+
     [SerializeField] private int maxBreadWaiting;
     [SerializeField] private int maxCheckOutWaiting;
+    [SerializeField] private int maxEatingWaiting;
 
-    public CustomerController FirstBreadCustomer()
+    protected override void Awake()
     {
-        if (breadWaitingCustomer == null && BreadWaitingCustomers.Count > 0)
+        base.Awake();
+
+        waitingCustomer = new CustomerController[waitingCustomerSize];
+        for (int i = 0; i < waitingCustomerSize; i++)
         {
-            breadWaitingCustomer = BreadWaitingCustomers.Dequeue();
+            WaitingCustomers.Add(new Queue<CustomerController>());
         }
-        
-        return breadWaitingCustomer;
     }
 
-    public void GoCheckOutCustomer()
+    public CustomerController FirstWaitingCustomer(int index)
     {
-        breadWaitingCustomer = null;
-
-        if (BreadWaitingCustomers.Count > 0)
+        if (waitingCustomer[index] == null && WaitingCustomers[index].Count > 0)
         {
-            FirstBreadCustomer().ChangeState<CustomerPickingBreadState>();
+            waitingCustomer[index] = WaitingCustomers[index].Dequeue();
+        }
 
-            for (int i = BreadWaitingCustomers.Count + 1; i < maxBreadWaiting; i++)
-            {
-                customerGenerator.CustomerPool.Get(customerGenerator.transform.position, Quaternion.identity).gameObject.SetActive(true);
-            }
+        return waitingCustomer[index];
+    }
+
+    public void GoCheckOutOrEatingCustomer(int index)
+    {
+        waitingCustomer[index] = null;
+
+        if (WaitingCustomers[index].Count > 0)
+        {
+            FirstWaitingCustomer(index).ChangeState<CustomerPickingBreadState>();
+        }
+        
+        if (WaitingCustomers[1].Count < maxCheckOutWaiting)
+        {
+            customerGenerator.Generate();
         }
     }
 }
