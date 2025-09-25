@@ -8,6 +8,7 @@ public abstract class BreadHandler : MonoBehaviour
 
     [Header("BreadHandler Settings")]
     [SerializeField] private Transform handTrs;
+    public Transform HandTrs => handTrs;
     [SerializeField] private float yStep = 0.4f;
     [SerializeField] private int maxBread;
 
@@ -19,10 +20,10 @@ public abstract class BreadHandler : MonoBehaviour
         int index = BreadStack.Count - 1;
         float yOffset = index * yStep;
         
-        bread.SetBread(handTrs, yOffset, 90f, handTrs);
+        bread.SetCurveMovement(handTrs, yOffset, 90f, handTrs);
     }
 
-    public Bread PutDownBread()
+    public Bread GetBread()
     {
         return BreadStack.Count == 0 ?  null : BreadStack.Pop();
     }

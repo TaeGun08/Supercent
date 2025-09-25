@@ -10,28 +10,30 @@ public class InGameManager : SingletonBehaviour<InGameManager>
 
     [Space] [Header("BasketTable")] [SerializeField]
     private BasketTable basketTable;
-
     public BasketTable BasketTable => basketTable;
 
     [Space] [Header("POSTable")] [SerializeField]
     private POSTable pOSTable;
-
     public POSTable POSTable => pOSTable;
 
     [Space] [Header("Generator")] [SerializeField]
     private CustomerGenerator customerGenerator;
+    public CustomerGenerator CustomerGenerator => customerGenerator;
+    [SerializeField] private PaperBagGenerator paperBagGenerator;
+    public PaperBagGenerator PaperBagGenerator => paperBagGenerator;
 
+    [Space] [Header("Customer Info")] [SerializeField]
+    private int waitingCustomerSize;
+    [SerializeField] private int maxBreadWaiting;
+    [SerializeField] private int maxCheckOutWaiting;
+    [SerializeField] private int maxEatingWaiting;
+    
     public List<Queue<CustomerController>> WaitingCustomers { get; private set; } =
         new List<Queue<CustomerController>>();
 
     private CustomerController[] waitingCustomer;
-
-    [Space] [Header("Customer Info")] [SerializeField]
-    private int waitingCustomerSize;
-
-    [SerializeField] private int maxBreadWaiting;
-    [SerializeField] private int maxCheckOutWaiting;
-    [SerializeField] private int maxEatingWaiting;
+    
+    public bool CheckingOut { get; set; }
 
     protected override void Awake()
     {

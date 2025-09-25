@@ -21,12 +21,6 @@ public abstract class DOCurveMovement : MonoBehaviour
         coll = GetComponent<Collider>();
     }
 
-    protected virtual void OnDisable()
-    {
-        rigid.isKinematic = false;
-        coll.isTrigger = false;
-    }
-
     /// <summary>
     /// 실시간으로 변경되는 위치에 포물선 이동을 위한 함수
     /// </summary>
@@ -34,7 +28,7 @@ public abstract class DOCurveMovement : MonoBehaviour
     /// <param name="yStep"></param>
     /// <param name="rotate"></param>
     /// <param name="parent"></param>
-    public virtual void SetBread(Transform targetTrs, float yStep, float rotate, Transform parent)
+    public virtual void SetCurveMovement(Transform targetTrs, float yStep, float rotate, Transform parent)
     {
         rigid.isKinematic = true;
         coll.isTrigger = true;
@@ -74,7 +68,7 @@ public abstract class DOCurveMovement : MonoBehaviour
     /// <param name="yStep"></param>
     /// <param name="rotate"></param>
     /// <param name="parent"></param>
-    public virtual void SetBread(Vector3 targetPos, float yStep, float rotate, Transform parent)
+    public virtual void SetCurveMovement(Vector3 targetPos, float yStep, float rotate, Transform parent, bool active)
     {
         rigid.isKinematic = true;
         coll.isTrigger = true;
@@ -83,7 +77,7 @@ public abstract class DOCurveMovement : MonoBehaviour
 
         Vector3 peakPos = new Vector3(
             targetPos.x,
-            targetPos.y * 2f,
+            targetPos.y * yStep,
             targetPos.z
         );
 
@@ -91,7 +85,11 @@ public abstract class DOCurveMovement : MonoBehaviour
 
         transform.DOPath(path, duration, PathType.CubicBezier)
             .SetEase(Ease.OutCubic)
-            .OnComplete(() => transform.position = targetPos);
+            .OnComplete(() =>
+            {
+                transform.position = targetPos;
+                gameObject.SetActive(active);
+            });
 
         transform.DORotate(new Vector3(0f, rotate, 0f), duration);
     }

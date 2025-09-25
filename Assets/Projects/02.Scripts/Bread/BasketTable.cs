@@ -42,7 +42,7 @@ public class BasketTable : OnTriggerInteraction
         {
             yield return wait;
             if (breadHandler.BreadStack.Count <= 0) continue;
-            PutDown(breadHandler.PutDownBread());
+            PutDown(breadHandler.GetBread());
         }
     }
 
@@ -127,7 +127,7 @@ public class BasketTable : OnTriggerInteraction
     {
         Vector3 pos = GetPutDownPos();
 
-        bread.SetBread(pos, pos.y, -35f, transform);
+        bread.SetCurveMovement(pos, pos.y * 3f, -35f, transform, true);
 
         Breads.Push(bread);
     }

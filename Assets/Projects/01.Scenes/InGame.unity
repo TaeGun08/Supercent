@@ -801,6 +801,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customerPrefab: {fileID: 8472589922504507229, guid: 642bc13e6a24e684ebe2134b2c935f7d, type: 3}
   initialSize: 10
+--- !u!4 &1251194023 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1430405000, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+  m_PrefabInstance: {fileID: 6468859745525847757}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1395544472 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1864602443, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
@@ -826,6 +831,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1447462985}
+  - component: {fileID: 1447462986}
   m_Layer: 0
   m_Name: PaperBagGenerator
   m_TagString: Untagged
@@ -848,6 +854,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1447462986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447462983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f3fde61c2bc504e99e15df732a9145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paperBagPrefab: {fileID: -2976720605955370113, guid: 63606f9a81a8b4642b2e18f27e151c38, type: 3}
+  initialSize: 10
+  paperBagTrs: {fileID: 1251194023}
 --- !u!1 &1484974232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,6 +1070,7 @@ MonoBehaviour:
   basketTable: {fileID: 1440681240}
   pOSTable: {fileID: 6468859745525847759}
   customerGenerator: {fileID: 1178837647}
+  paperBagGenerator: {fileID: 1447462986}
   waitingCustomerSize: 3
   maxBreadWaiting: 3
   maxCheckOutWaiting: 3

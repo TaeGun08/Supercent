@@ -15,7 +15,7 @@ public class CustomerDecisionState : CustomerStateBase
     public override void OnUpdate()
     {
         if (Agent.pathPending || !(Agent.remainingDistance <= Agent.stoppingDistance)) return;
-        Controller.ChangeState<CustomerCheckingOutState>();
+        Controller.ChangeState<CustomerWaitingCheckoutState>();
     }
     
     public override void StateExit()

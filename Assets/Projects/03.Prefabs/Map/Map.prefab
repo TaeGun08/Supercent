@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 425016411}
   - component: {fileID: 957374297}
+  - component: {fileID: 6468859745525847761}
   m_Layer: 0
   m_Name: POSTable
   m_TagString: Untagged
@@ -47,10 +48,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4963b7a5d72484387e0926fccb103c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plane: {fileID: 1456437386}
+  planeScaleSize: 0.15
   startPos:
   - {x: 0, y: 0.5, z: 0.5}
   - {x: 3, y: 0.5, z: 0.5}
   zStep: 1.25
+--- !u!65 &6468859745525847761
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425016410}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: -1.3}
 --- !u!1 &833585524
 GameObject:
   m_ObjectHideFlags: 0
