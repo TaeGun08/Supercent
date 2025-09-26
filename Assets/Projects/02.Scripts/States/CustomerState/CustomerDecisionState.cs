@@ -6,10 +6,12 @@ public class CustomerDecisionState : CustomerStateBase
 {
     public override void StateEnter()
     {
-        Vector3 pos = InGameManager.POSTable.GetPos(0, InGameManager.WaitingCustomers[1].Count);
+        int count = InGameManager.FirstWaitingCustomer(CHECKOUT_INDEX) != null ? 1 : 0;
+        
+        Vector3 pos = InGameManager.POSTable.GetPos(GOING_CHECKOUT_INDEX, InGameManager.WaitingCustomers[CHECKOUT_INDEX].Count + count);
         Agent.SetDestination(pos);
         
-        InGameManager.WaitingCustomers[1].Enqueue(Controller);
+        InGameManager.WaitingCustomers[CHECKOUT_INDEX].Enqueue(Controller);
     }
 
     public override void OnUpdate()

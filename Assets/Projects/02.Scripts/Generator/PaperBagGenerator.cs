@@ -21,6 +21,7 @@ public class PaperBagGenerator : MonoBehaviour
 
     public void Generate()
     {
+        if (PaperBag != null) return;
         PaperBag = PaperBagPool.Get(paperBagTrs.position, Quaternion.Euler(0f, 90f, 0f));
         PaperBag.gameObject.SetActive(true);
     }

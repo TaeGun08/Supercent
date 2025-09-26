@@ -14,22 +14,22 @@ public class CustomerEnteringState : CustomerStateBase
 
         Transform trs = InGameManager.Instance.BasketTable.GetAvailableSlot();
         Customer.MoveTargetTrs = trs;
-        
+
         Agent.SetDestination(centerPoint.position);
     }
 
     public override void OnUpdate()
     {
         if (Agent.pathPending || !(Agent.remainingDistance <= Agent.stoppingDistance)) return;
-        
+
         if (!reachedCenter)
         {
             reachedCenter = true;
             Agent.SetDestination(Customer.MoveTargetTrs.position);
-            InGameManager.WaitingCustomers[0].Enqueue(Controller);
         }
         else
         {
+            InGameManager?.WaitingCustomers[0].Enqueue(Controller);
             Controller.ChangeState<CustomerPickingBreadState>();
         }
     }

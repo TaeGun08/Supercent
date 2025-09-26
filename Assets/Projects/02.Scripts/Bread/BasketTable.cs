@@ -81,9 +81,20 @@ public class BasketTable : OnTriggerInteraction
             if (targetPos[i] == slot)
             {
                 slotOccupied[i] = false;
+                InGameManager.Instance.MaxCustomerCheckAndGenerate();
                 break;
             }
         }
+    }
+
+    public bool SlotCheck()
+    {
+        foreach (var slot in slotOccupied)
+        {
+            if (slot) return true;
+        }
+        
+        return false;
     }
 
     private Vector3 GetPutDownPos()
@@ -104,30 +115,12 @@ public class BasketTable : OnTriggerInteraction
 
         return pos;
     }
-
-    private void PickUpPos()
-    {
-        if (Breads.Count == 0) return;
-
-        int count = Breads.Count - 1;
-        int perRow = 3;
-        int perLayer = 6;
-
-        int layer = count / perLayer;
-        int row = (count % perLayer) / perRow;
-        int col = count % perRow;
-
-        Vector3 pos = startPos;
-        pos.x -= col * xStep;
-        pos.z -= row * zStep;
-        pos.y -= layer * yStep;
-    }
-
+    
     private void PutDown(Bread bread)
     {
         Vector3 pos = GetPutDownPos();
 
-        bread.SetCurveMovement(pos, pos.y * 3f, -35f, transform, true);
+        bread.SetCurveMovement(pos, pos.y + 1f, -35f, transform, true);
 
         Breads.Push(bread);
     }
@@ -135,7 +128,6 @@ public class BasketTable : OnTriggerInteraction
     public Bread PickUp()
     {
         if (Breads.Count == 0) return null;
-        PickUpPos();
         return Breads.Pop();
     }
 }

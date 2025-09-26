@@ -9,9 +9,14 @@ public class Customer : BreadHandler
 
     [Header("Customer Settings")] [SerializeField]
     private int breadMaxCount;
+    [SerializeField] private int hasMoney;
+    public int HasMoney => hasMoney;
+    
     public int PickingBreadCount { get; private set; }
     
     public Transform MoveTargetTrs { get; set; }
+    
+    public PaperBag GetPaperBag { get; set; }
     
     private void Awake()
     {

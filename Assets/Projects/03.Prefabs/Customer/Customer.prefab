@@ -963,6 +963,7 @@ MonoBehaviour:
   yStep: 0.4
   maxBread: 0
   breadMaxCount: 3
+  hasMoney: 3
 --- !u!114 &-610901433195965272
 MonoBehaviour:
   m_ObjectHideFlags: 0

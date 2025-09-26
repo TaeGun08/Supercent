@@ -8,6 +8,7 @@ public class CustomerPickingBreadState : CustomerStateBase
     
     public override void StateEnter()
     {
+        timer = 0;
     }
     
     public override void OnUpdate()
@@ -15,7 +16,8 @@ public class CustomerPickingBreadState : CustomerStateBase
         if (Customer.BreadStack.Count >= Customer.PickingBreadCount)
         {
             InGameManager.BasketTable.ReleaseSlot(Customer.MoveTargetTrs);
-            InGameManager.GoCheckOutOrEatingCustomer(0);
+            
+            InGameManager.CustomerBehaviour<CustomerPickingBreadState>(BREAD_INDEX);
             Controller.ChangeState<CustomerDecisionState>();
             return;
         }
@@ -36,6 +38,5 @@ public class CustomerPickingBreadState : CustomerStateBase
 
     public override void StateExit()
     {
-        timer = 0;
     }
 }

@@ -11,6 +11,15 @@ public class Bread : DOCurveMovement
         coll.isTrigger = false;
     }
     
+    protected override void ResetVector()
+    {
+        base.ResetVector();
+        
+        if (gameObject.activeSelf) return;
+        InGameManager.Instance.BreadGenerator.BreadPool.Return(this);
+    }
+
+    
     public void BakeBread()
     {
         rigid.AddForce(-Vector3.forward * 4f, ForceMode.Impulse);

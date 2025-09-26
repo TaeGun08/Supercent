@@ -12,14 +12,14 @@ public abstract class OnTriggerInteraction : MonoBehaviour
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
-        plane.DOScale(Vector3.one + Vector3.one * planeScaleSize, 0.1f);
+        plane?.DOScale(Vector3.one + Vector3.one * planeScaleSize, 0.1f);
         TriggerEnter(other);
     }
 
     protected virtual void OnTriggerExit(Collider other)
     {
         if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
-        plane.DOScale(Vector3.one, 0.1f);
+        plane?.DOScale(Vector3.one, 0.1f);
         TriggerExit(other);
     }
 

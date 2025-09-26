@@ -10,6 +10,7 @@ public class BreadGenerator : MonoBehaviour
     [SerializeField] private Transform bakeTransform;
     [SerializeField] private int initialSize = 10;
     [SerializeField] private int maxBake = 10;
+    [SerializeField] private float bakeDuration;
 
     public Queue<Bread> BakeBreads { get; private set; } = new Queue<Bread>();
     public GenericPool<Bread> BreadPool { get; private set; }
@@ -23,7 +24,7 @@ public class BreadGenerator : MonoBehaviour
 
     private IEnumerator BakeBreadCoroutine()
     {
-        WaitForSeconds wait = new WaitForSeconds(2f);
+        WaitForSeconds wait = new WaitForSeconds(bakeDuration);
         
         while (true)
         {

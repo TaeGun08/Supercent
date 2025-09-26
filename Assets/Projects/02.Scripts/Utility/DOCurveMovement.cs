@@ -28,7 +28,7 @@ public abstract class DOCurveMovement : MonoBehaviour
     /// <param name="yStep"></param>
     /// <param name="rotate"></param>
     /// <param name="parent"></param>
-    public virtual void SetCurveMovement(Transform targetTrs, float yStep, float rotate, Transform parent)
+    public virtual void SetCurveMovement(Transform targetTrs, float yStep, float rotate, float height, Transform parent)
     {
         rigid.isKinematic = true;
         coll.isTrigger = true;
@@ -39,7 +39,7 @@ public abstract class DOCurveMovement : MonoBehaviour
         Vector3 targetPos = targetTrs.position + new Vector3(0, yStep, 0);
 
         Vector3 midPoint = (startPos + targetPos) / 2f;
-        midPoint.y += yStep * 2f;
+        midPoint.y += yStep * height;
         Vector3 p1 = Vector3.Lerp(startPos, midPoint, 0.5f);
         Vector3 p2 = Vector3.Lerp(midPoint, targetPos, 0.5f);
 
@@ -58,6 +58,7 @@ public abstract class DOCurveMovement : MonoBehaviour
             {
                 transform.position = targetPos;
                 transform.rotation = targetTrs.rotation * Quaternion.Euler(0, rotate, 0);
+                ResetTransform();
             });
     }
 
@@ -77,20 +78,31 @@ public abstract class DOCurveMovement : MonoBehaviour
 
         Vector3 peakPos = new Vector3(
             targetPos.x,
-            targetPos.y * yStep,
+            yStep,
             targetPos.z
         );
 
         Vector3[] path = new Vector3[] { transform.position, peakPos, targetPos };
 
-        transform.DOPath(path, duration, PathType.CubicBezier)
+        transform.DOJump(targetPos, yStep, 1, duration)
             .SetEase(Ease.OutCubic)
             .OnComplete(() =>
             {
                 transform.position = targetPos;
                 gameObject.SetActive(active);
+                ResetVector();
             });
 
         transform.DORotate(new Vector3(0f, rotate, 0f), duration);
+    }
+
+    protected virtual void ResetTransform()
+    {
+        
+    }
+    
+    protected virtual void ResetVector()
+    {
+        
     }
 }

@@ -21,7 +21,7 @@ public class CustomerGenerator : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            CustomerPool.Get(transform.position, Quaternion.identity).gameObject.SetActive(true);
+            Generate();
             yield return new WaitForSeconds(1f);
         }
     }
