@@ -31,7 +31,7 @@ public class GetMoneyArea : OnTriggerInteraction
             yield return wait;
             
             if (InGameManager.MoneyGenerator.Moneys.Count <= 0) continue;
-            
+
             Money money = InGameManager.MoneyGenerator.Moneys.Pop();
             money.SetCurveMovement(other.transform, other.transform.position.y + 0.5f, 0f, 2f, transform);
             player.HasMoney++;
