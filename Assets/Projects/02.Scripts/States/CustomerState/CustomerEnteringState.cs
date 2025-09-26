@@ -29,7 +29,7 @@ public class CustomerEnteringState : CustomerStateBase
         }
         else
         {
-            InGameManager?.WaitingCustomers[0].Enqueue(Controller);
+            InGameManager.EnqueueCustomer(InGameManager.BREAD_INDEX, Controller);
             Controller.ChangeState<CustomerPickingBreadState>();
         }
     }

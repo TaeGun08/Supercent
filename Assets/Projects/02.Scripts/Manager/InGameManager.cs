@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class InGameManager : SingletonBehaviour<InGameManager>
 {
-    protected const int BREAD_INDEX = 0;
-    protected const int CHECKOUT_INDEX = 1;
-    protected const int EATING_INDEX = 2;
+    public const int BREAD_INDEX = 0;
+    public const int CHECKOUT_INDEX = 1;
+    public const int EATING_INDEX = 2;
     
-    protected const int GOING_CHECKOUT_INDEX = 0;
+    public  const int GOING_CHECKOUT_INDEX = 0;
     
     [Header("JoyStick")] [SerializeField] private JoyStickController joyStickController;
     public JoyStickController JoyStickController => joyStickController;
@@ -41,66 +41,79 @@ public class InGameManager : SingletonBehaviour<InGameManager>
     public List<Queue<CustomerController>> WaitingCustomers { get; private set; } =
         new List<Queue<CustomerController>>();
     
-    private CustomerController[] waitingCustomer;
-    
     public bool CheckingOut { get; set; }
 
     protected override void Awake()
     {
         base.Awake();
 
-        waitingCustomer = new CustomerController[waitingCustomerSize];
         for (int i = 0; i < waitingCustomerSize; i++)
         {
             WaitingCustomers.Add(new Queue<CustomerController>());
         }
     }
 
-    public Queue<CustomerController> GetWaitingQueue(int index)
+    private Queue<CustomerController> GetWaitingQueue(int index)
     {
         return WaitingCustomers[index];
     }
 
-    public CustomerController GetWaitingCustomer(int index)
+    public int GetQueueCount(int index)
     {
-        return waitingCustomer[index];
-    }
-    
-    
-    public CustomerController FirstWaitingCustomer(int index)
-    {
-        var customer = GetWaitingCustomer(index);
-        var queue = GetWaitingQueue(index);
-        
-        if (customer == null)
-        {
-            if (queue.Count <= 0) return null;
-            
-            waitingCustomer[index] = WaitingCustomers[index].Dequeue();
-        }
-
-        return waitingCustomer[index];
+        return WaitingCustomers[index].Count;
     }
 
-    public void CustomerBehaviour<T>(int index) where T : CustomerStateBase
+    public void EnqueueCustomer(int index, CustomerController customer)
     {
-        waitingCustomer[index] = null;
+        GetWaitingQueue(index).Enqueue(customer);
+    }
 
-        FirstWaitingCustomer(index)?.ChangeState<T>();
+    public CustomerController DequeueCustomer(int index)
+    {
+        return GetWaitingQueue(index).Dequeue();
+    }
+
+    public CustomerController PeekCustomer(int index)
+    {
+        if(GetQueueCount(index) == 0) return null;
+        return GetWaitingQueue(index).Peek();
+    }
+
+    public bool CustomerChecker(int index, CustomerController customer)
+    {
+        CustomerController controller = GetWaitingQueue(index).Peek();
+        return controller == customer;
+    }
+
+    /// <summary>
+    /// 다음 해당 대기열의 다음 Customer의 상태 지정 필요함
+    /// </summary>
+    /// <param name="index"></param>
+    /// <typeparam name="T"></typeparam>
+    public void NextStep<T>(int index) where T : CustomerStateBase
+    {
+        if (GetQueueCount(index) == 0) return;
+        DequeueCustomer(index);
+        var nextCustomer = PeekCustomer(index);
+        nextCustomer?.ChangeState<T>();
     }
 
     public void MaxCustomerCheckAndGenerate()
     {
-         if (WaitingCustomers[BREAD_INDEX].Count >= maxBreadWaiting || WaitingCustomers[CHECKOUT_INDEX].Count >= maxCheckOutWaiting) return;
+         if (WaitingCustomers[BREAD_INDEX].Count >= maxBreadWaiting 
+             || WaitingCustomers[CHECKOUT_INDEX].Count >= maxCheckOutWaiting) return;
          CustomerGenerator.Generate();
     }
 
     public void ArrangeWaitingLine(int index)
     {
+        var queue = GetWaitingQueue(index);
+        
         int count = 0;
-        foreach (var customer in WaitingCustomers[index])
+        foreach (var customer in queue)
         {
-            customer.Agent.SetDestination(pOSTable.GetPos(GOING_CHECKOUT_INDEX, count));
+            var position = pOSTable.GetPos(GOING_CHECKOUT_INDEX,count);
+            customer.Agent.SetDestination(position);
             count++;
         }
     }

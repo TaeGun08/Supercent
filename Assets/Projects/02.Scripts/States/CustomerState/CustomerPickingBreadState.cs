@@ -13,16 +13,13 @@ public class CustomerPickingBreadState : CustomerStateBase
     
     public override void OnUpdate()
     {
-        if (Customer.BreadStack.Count >= Customer.PickingBreadCount)
-        {
-            InGameManager.BasketTable.ReleaseSlot(Customer.MoveTargetTrs);
-            
-            InGameManager.CustomerBehaviour<CustomerPickingBreadState>(BREAD_INDEX);
-            Controller.ChangeState<CustomerDecisionState>();
-            return;
-        }
-        
-        if (InGameManager.BasketTable.Breads.Count <= 0)
+        if (CheckFullStack()) return;
+        GetBread();
+    }
+
+    private void GetBread()
+    {
+        if (InGameManager.BasketTable.Breads.Count <= 0 || !InGameManager.CustomerChecker(InGameManager.BREAD_INDEX, Controller))
         {
             Controller.ChangeState<CustomerWaitingBreadState>();
             return;
@@ -34,6 +31,18 @@ public class CustomerPickingBreadState : CustomerStateBase
         timer = 0;
         
         Customer.PickupBread(InGameManager.BasketTable.PickUp());
+    }
+
+    private bool CheckFullStack()
+    {
+        if (Customer.BreadStack.Count < Customer.PickingBreadCount) return false;
+        
+        InGameManager.BasketTable.ReleaseSlot(Customer.MoveTargetTrs);
+        
+        Controller.ChangeState<CustomerDecisionState>();
+        InGameManager.NextStep<CustomerPickingBreadState>(InGameManager.BREAD_INDEX);
+        
+        return true;
     }
 
     public override void StateExit()

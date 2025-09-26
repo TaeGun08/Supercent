@@ -5,10 +5,6 @@ using UnityEngine.AI;
 
 public abstract class CustomerStateBase : MonoBehaviour
 {
-    protected const int BREAD_INDEX = 0;
-    protected const int CHECKOUT_INDEX = 1;
-    protected const int EATING_INDEX = 2;
-    
     protected const int GOING_CHECKOUT_INDEX = 0;
     protected const int GOING_EATING_INDEX = 1;
     

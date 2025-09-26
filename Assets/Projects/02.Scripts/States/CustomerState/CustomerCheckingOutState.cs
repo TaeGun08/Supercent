@@ -46,10 +46,11 @@ public class CustomerCheckingOutState : CustomerStateBase
         
         InGameManager.CheckingOut = false;
         InGameManager.PaperBagGenerator.PaperBag = null;
-        InGameManager.ArrangeWaitingLine(CHECKOUT_INDEX);
-        InGameManager.CustomerBehaviour<CustomerCheckingOutState>(CHECKOUT_INDEX);
         
         Controller.ChangeState<CustomerLeavingState>();
+        
+        InGameManager.NextStep<CustomerCheckingOutState>(InGameManager.CHECKOUT_INDEX);
+        InGameManager.ArrangeWaitingLine(InGameManager.CHECKOUT_INDEX);
     }
 
     private void PackagingBread()

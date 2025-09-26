@@ -30,20 +30,20 @@ public class POSTable : OnTriggerInteraction
         {
             yield return wait;
 
-            CustomerController customer = InGameManager.FirstWaitingCustomer(1);
+            CustomerController customer = InGameManager.PeekCustomer(InGameManager.CHECKOUT_INDEX);
 
-            if (customer != null && customer.CurrentState is CustomerWaitingCheckoutState)
-            {
-                if (InGameManager.CheckingOut) continue;
+            if(customer == null) continue;
+            if(customer.CurrentState is CustomerWaitingCheckoutState == false) continue;
+            if(InGameManager.CheckingOut) continue;
+              
+            
+            InGameManager.CheckingOut = true;
                 
-                InGameManager.CheckingOut = true;
+            yield return new WaitForSeconds(0.25f);
+            InGameManager.PaperBagGenerator.Generate();
                 
-                yield return new WaitForSeconds(0.25f);
-                InGameManager.PaperBagGenerator.Generate();
-                
-                yield return new WaitForSeconds(0.5f);
-                customer.ChangeState<CustomerCheckingOutState>();
-            }
+            yield return new WaitForSeconds(0.5f);
+            customer.ChangeState<CustomerCheckingOutState>();
         }
 
         InGameManager.CheckingOut = false;
@@ -54,6 +54,12 @@ public class POSTable : OnTriggerInteraction
         inside = false;
     }
 
+    /// <summary>
+    /// 0번은 계산, 1번은 매장 식사
+    /// </summary>
+    /// <param name="posIndex"></param>
+    /// <param name="index"></param>
+    /// <returns></returns>
     public Vector3 GetPos(int posIndex, int index)
     {
         Vector3 pos = startPos[posIndex];

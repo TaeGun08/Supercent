@@ -52,12 +52,17 @@ public class BasketTable : OnTriggerInteraction
 
         if (Breads.Count <= 0) return;
 
-        CustomerController customer = InGameManager.Instance.FirstWaitingCustomer(0);
-        
+        ///첫시작
+        var customer = InGameManager.Instance.PeekCustomer(InGameManager.BREAD_INDEX);
         if (customer != null && customer.CurrentState is CustomerWaitingBreadState)
         {
             customer.ChangeState<CustomerPickingBreadState>();
         }
+        
+        // if (customer != null && customer.CurrentState is CustomerWaitingBreadState)
+        // {
+        //     customer.ChangeState<CustomerPickingBreadState>();
+        // }
     }
 
     public Transform GetAvailableSlot()

@@ -6,17 +6,19 @@ public class CustomerDecisionState : CustomerStateBase
 {
     public override void StateEnter()
     {
-        int count = InGameManager.FirstWaitingCustomer(CHECKOUT_INDEX) != null ? 1 : 0;
+        int count = InGameManager.GetQueueCount(InGameManager.CHECKOUT_INDEX);
+        count = Mathf.Max(count, 0);
         
-        Vector3 pos = InGameManager.POSTable.GetPos(GOING_CHECKOUT_INDEX, InGameManager.WaitingCustomers[CHECKOUT_INDEX].Count + count);
+        Vector3 pos = InGameManager.POSTable.GetPos
+            (GOING_CHECKOUT_INDEX, count);
+        
         Agent.SetDestination(pos);
-        
-        InGameManager.WaitingCustomers[CHECKOUT_INDEX].Enqueue(Controller);
+        InGameManager.EnqueueCustomer(InGameManager.CHECKOUT_INDEX, Controller);
     }
 
     public override void OnUpdate()
     {
-        if (Agent.pathPending || !(Agent.remainingDistance <= Agent.stoppingDistance)) return;
+        if (Agent.pathPending || (Agent.remainingDistance <= Agent.stoppingDistance) == false) return;
         Controller.ChangeState<CustomerWaitingCheckoutState>();
     }
     

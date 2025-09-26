@@ -6,7 +6,8 @@ public class CustomerLeavingState : CustomerStateBase
 {
     public override void StateEnter()
     {
-        Agent.SetDestination(InGameManager.CustomerGenerator.transform.position);
+        InGameManager.MaxCustomerCheckAndGenerate();
+        //Agent.SetDestination(InGameManager.CustomerGenerator.transform.position);
     }
     
     public override void OnUpdate()
