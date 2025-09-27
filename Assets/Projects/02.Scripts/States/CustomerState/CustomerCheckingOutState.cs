@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CustomerCheckingOutState : CustomerStateBase
 {
-    private float timer = 0f;
+    private float timer;
 
     public override void StateEnter()
     {
@@ -15,7 +15,7 @@ public class CustomerCheckingOutState : CustomerStateBase
     {
         if (InGameManager.CheckingOut == false)
         {
-            Controller.ChangeState<CustomerWaitingCheckoutState>();
+            Controller.ChangeState<CustomerWaitingState>();
             return;
         }
 
@@ -40,9 +40,9 @@ public class CustomerCheckingOutState : CustomerStateBase
     private void CheckOut()
     {
         Customer.GetPaperBag = InGameManager.PaperBagGenerator.PaperBag;
-        Customer.GetPaperBag.SetCurveMovement(Customer.HandTrs.position, 2f, 0f, Customer.HandTrs, true);
+        Customer.GetPaperBag.SetCurveMovement(Customer.HandTrs, 0f, 0f, 5f, Customer.HandTrs);
         
-        InGameManager.MoneyGenerator.Generate(Customer.HasMoney);
+        InGameManager.MoneyGenerator.Generate(10, InGameManager.POSTable.GetMoneyArea);
         
         InGameManager.CheckingOut = false;
         InGameManager.PaperBagGenerator.PaperBag = null;

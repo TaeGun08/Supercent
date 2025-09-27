@@ -31,7 +31,7 @@ public class CustomerGenerator : MonoBehaviour
         {
             yield return wfs;
             
-            if (!InGameManager.CustomerChecker()) continue;
+            if (!InGameManager.MaxBasketSlotAndMaxCheckOutWaiting()) continue;
 
             CustomerPool.Get(transform.position, Quaternion.identity).gameObject.SetActive(true);
         }

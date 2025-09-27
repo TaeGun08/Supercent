@@ -50,11 +50,14 @@ public class JoyStickController : MonoBehaviour
     private void DragStick()
     {
         Vector3 direction = Input.mousePosition - startPos;
+        
+        direction = Vector3.ClampMagnitude(direction, radius);
 
-        if (direction.magnitude > radius)
-            direction = direction.normalized * radius;
-
-        handle.position = Vector3.Lerp(handle.position, startPos + direction, Time.deltaTime * handleSpeed);
+        handle.position = Vector3.Lerp(
+            handle.position,
+            startPos + direction,
+            Time.deltaTime * handleSpeed
+        );
 
         dragDirection = handle.position - startPos;
         touchPoint.position = Input.mousePosition;

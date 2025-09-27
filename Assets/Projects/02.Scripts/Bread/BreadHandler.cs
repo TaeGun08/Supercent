@@ -20,7 +20,7 @@ public abstract class BreadHandler : MonoBehaviour
         int index = BreadStack.Count - 1;
         float yOffset = index * yStep;
         
-        bread.SetCurveMovement(handTrs, yOffset, 90f, 2f, handTrs);
+        bread.SetCurveMovement(handTrs, yOffset, 90f, 5f, handTrs);
     }
 
     public Bread GetBread()

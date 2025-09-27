@@ -9,20 +9,27 @@ public class InGameManager : SingletonBehaviour<InGameManager>
     public const int CHECKOUT_INDEX = 1;
     public const int EATING_INDEX = 2;
     
-    public  const int GOING_CHECKOUT_INDEX = 0;
-    
-    [Header("JoyStick")] [SerializeField] private JoyStickController joyStickController;
+    [Header("JoyStick")]
+    [SerializeField] private JoyStickController joyStickController;
     public JoyStickController JoyStickController => joyStickController;
 
-    [Space] [Header("BasketTable")] 
+    [Space]
+    [Header("BasketTable")] 
     [SerializeField] private BasketTable basketTable;
     public BasketTable BasketTable => basketTable;
 
-    [Space] [Header("POSTable")] 
+    [Space] 
+    [Header("POSTable")] 
     [SerializeField] private POSTable pOSTable;
     public POSTable POSTable => pOSTable;
 
-    [Space] [Header("Generator")] 
+    [Space] 
+    [Header("EatingHole")] 
+    [SerializeField] private EatingHole eatingHole;
+    public EatingHole EatingHole => eatingHole;
+
+    [Space] 
+    [Header("Generator")] 
     [SerializeField] private CustomerGenerator customerGenerator;
     public CustomerGenerator CustomerGenerator => customerGenerator;
     [SerializeField] private PaperBagGenerator paperBagGenerator;
@@ -32,7 +39,8 @@ public class InGameManager : SingletonBehaviour<InGameManager>
     [SerializeField] private MoneyGenerator moneyGenerator;
     public MoneyGenerator MoneyGenerator => moneyGenerator;
 
-    [Space] [Header("Customer Info")] 
+    [Space] 
+    [Header("Customer Info")] 
     [SerializeField] private int waitingCustomerSize;
     [SerializeField] private int maxCheckOutWaiting;
     [SerializeField] private int maxEatingWaiting;
@@ -57,6 +65,11 @@ public class InGameManager : SingletonBehaviour<InGameManager>
         return WaitingCustomers[index];
     }
 
+    private void DequeueCustomer(int index)
+    {
+        GetWaitingQueue(index).Dequeue();
+    }
+    
     public int GetQueueCount(int index)
     {
         return WaitingCustomers[index].Count;
@@ -65,11 +78,6 @@ public class InGameManager : SingletonBehaviour<InGameManager>
     public void EnqueueCustomer(int index, CustomerController customer)
     {
         GetWaitingQueue(index).Enqueue(customer);
-    }
-
-    private void DequeueCustomer(int index)
-    {
-        GetWaitingQueue(index).Dequeue();
     }
 
     public CustomerController PeekCustomer(int index)
@@ -104,14 +112,19 @@ public class InGameManager : SingletonBehaviour<InGameManager>
         int count = 0;
         foreach (var customer in queue)
         {
-            var position = pOSTable.GetPos(GOING_CHECKOUT_INDEX,count);
+            var position = pOSTable.GetPos(index - 1,count);
             customer.Agent.SetDestination(position);
             count++;
         }
     }
 
-    public bool CustomerChecker()
+    public bool MaxBasketSlotAndMaxCheckOutWaiting()
     {
         return basketTable.SlotCheck() && GetQueueCount(CHECKOUT_INDEX) < maxCheckOutWaiting;
+    }
+
+    public bool MaxEatingWaiting()
+    {
+        return GetQueueCount(EATING_INDEX) < maxEatingWaiting;
     }
 }

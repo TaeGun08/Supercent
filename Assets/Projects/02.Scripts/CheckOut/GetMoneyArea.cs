@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class GetMoneyArea : OnTriggerInteraction
 {
-    private InGameManager InGameManager;
-    
     private bool inside;
-
-    private void Start()
-    {
-        InGameManager = InGameManager.Instance;
-    }
+    
+    private Stack<Money> moneyStack = new Stack<Money>();
+    
+    [Header("GetMoneyArea Settings")]
+    [SerializeField] private Transform moneyTrs;
+    [SerializeField] private float xStep, yStep, zStep;
 
     protected override void TriggerEnter(Collider other)
     {
@@ -30,10 +29,10 @@ public class GetMoneyArea : OnTriggerInteraction
         {
             yield return wait;
             
-            if (InGameManager.MoneyGenerator.Moneys.Count <= 0) continue;
+            if (moneyStack.Count <= 0) continue;
 
-            Money money = InGameManager.MoneyGenerator.Moneys.Pop();
-            money.SetCurveMovement(other.transform, other.transform.position.y + 0.5f, 0f, 2f, transform);
+            Money money = moneyStack.Pop();
+            money.SetCurveMovement(other.transform, other.transform.position.y + 0.5f, 0f, 5f, transform);
             player.HasMoney++;
         }
     }
@@ -41,5 +40,30 @@ public class GetMoneyArea : OnTriggerInteraction
     protected override void TriggerExit(Collider other)
     {
         inside = false;
+    }
+
+    private Vector3 GetPutDownPos()
+    {
+        int count = moneyStack.Count;
+
+        int perRow = 3;
+        int perLayer = 3 * 3;
+
+        int layer = count / perLayer;
+        int rowInLayer = (count % perLayer) / perRow;
+        int colInRow = count % perRow;
+
+        Vector3 pos = moneyTrs.position;
+        pos.x += colInRow * xStep;
+        pos.z += rowInLayer * zStep;
+        pos.y += layer * yStep;
+
+        return pos;
+    }
+    
+    public void PushMoney(Money money)
+    {
+        money.transform.position = GetPutDownPos();
+        moneyStack.Push(money);
     }
 }

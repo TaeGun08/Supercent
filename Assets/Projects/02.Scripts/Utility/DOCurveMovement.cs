@@ -37,9 +37,10 @@ public abstract class DOCurveMovement : MonoBehaviour
 
         Vector3 startPos = transform.position;
         Vector3 targetPos = targetTrs.position + new Vector3(0, yStep, 0);
-
+        
         Vector3 midPoint = (startPos + targetPos) / 2f;
-        midPoint.y += yStep * height;
+        midPoint.y += height;
+
         Vector3 p1 = Vector3.Lerp(startPos, midPoint, 0.5f);
         Vector3 p2 = Vector3.Lerp(midPoint, targetPos, 0.5f);
 
@@ -51,8 +52,12 @@ public abstract class DOCurveMovement : MonoBehaviour
             {
                 targetPos = targetTrs.position + new Vector3(0, yStep, 0);
                 transform.position = Bezier.Cubic(startPos, p1, p2, targetPos, t);
-                transform.rotation = Quaternion.Euler(0,
-                    Mathf.LerpAngle(transform.rotation.eulerAngles.y, targetTrs.rotation.eulerAngles.y + rotate, t), 0);
+
+                transform.rotation = Quaternion.Euler(
+                    0,
+                    Mathf.LerpAngle(transform.rotation.eulerAngles.y, targetTrs.rotation.eulerAngles.y + rotate, t),
+                    0
+                );
             })
             .OnComplete(() =>
             {

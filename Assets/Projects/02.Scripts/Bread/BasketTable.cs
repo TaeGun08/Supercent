@@ -53,7 +53,7 @@ public class BasketTable : OnTriggerInteraction
         if (Breads.Count <= 0) return;
         
         var customer = InGameManager.Instance.PeekCustomer(InGameManager.BREAD_INDEX);
-        if (customer != null && customer.CurrentState is CustomerWaitingBreadState)
+        if (customer != null && customer.CurrentState is CustomerWaitingState)
         {
             customer.ChangeState<CustomerPickingBreadState>();
         }

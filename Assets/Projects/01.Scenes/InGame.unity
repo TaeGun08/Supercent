@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.25
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -114,7 +114,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.083333336
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -167,12 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 584523a6ffd48df43b393aea5675e174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: -2.7, y: 0.5, z: -0.6}
   moneyPrefab: {fileID: 7827595596805516795, guid: 109de595e352f3b48924efe036aa8aa3, type: 3}
   initialSize: 10
-  xStep: 0.3
-  yStep: 0.05
-  zStep: -0.5
 --- !u!1 &68032113
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,6 +404,17 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!114 &602221522 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 602221522, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+  m_PrefabInstance: {fileID: 6468859745525847757}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdbd400921902174e9b5ef7f88510090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1089,6 +1096,7 @@ MonoBehaviour:
   joyStickController: {fileID: 1835547383}
   basketTable: {fileID: 1440681240}
   pOSTable: {fileID: 6468859745525847759}
+  eatingHole: {fileID: 602221522}
   customerGenerator: {fileID: 1178837647}
   paperBagGenerator: {fileID: 1447462986}
   breadGenerator: {fileID: 228567027}
@@ -1338,6 +1346,10 @@ PrefabInstance:
     - target: {fileID: 3179164372799309438, guid: 43b1efac09bc84e43b0688e730652dff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714099656771853759, guid: 43b1efac09bc84e43b0688e730652dff, type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43b1efac09bc84e43b0688e730652dff, type: 3}

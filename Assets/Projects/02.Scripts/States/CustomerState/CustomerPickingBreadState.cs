@@ -21,7 +21,7 @@ public class CustomerPickingBreadState : CustomerStateBase
     {
         if (InGameManager.BasketTable.Breads.Count <= 0 || !InGameManager.CustomerChecker(InGameManager.BREAD_INDEX, Controller))
         {
-            Controller.ChangeState<CustomerWaitingBreadState>();
+            Controller.ChangeState<CustomerWaitingState>();
             return;
         }
         

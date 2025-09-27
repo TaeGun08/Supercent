@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class Customer : BreadHandler
 {
+    private InGameManager InGameManager;
+    
     public NavMeshAgent Agent { get; private set; }
     public CustomerController CustomerController { get; private set; }
 
@@ -17,11 +20,18 @@ public class Customer : BreadHandler
     public Transform MoveTargetTrs { get; set; }
     
     public PaperBag GetPaperBag { get; set; }
-    
+
+    public Table SitTable { get; set; }
+
     private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
         CustomerController = GetComponent<CustomerController>();
+    }
+
+    private void Start()
+    {
+        InGameManager = InGameManager.Instance;
     }
 
     private void OnEnable()
@@ -29,10 +39,15 @@ public class Customer : BreadHandler
         PickingBreadCount = Random.Range(1, breadMaxCount + 1);
     }
 
+    public void GoingEatingTable(Transform target)
+    {
+        Agent.SetDestination(target.position);
+        InGameManager.ArrangeWaitingLine(InGameManager.EATING_INDEX);
+    }
+
     public void Reset()
     {
         MoveTargetTrs = null;
         GetPaperBag = null;
-        
     }
 }

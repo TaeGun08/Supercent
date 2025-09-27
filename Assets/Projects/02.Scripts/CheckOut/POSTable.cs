@@ -6,9 +6,12 @@ public class POSTable : OnTriggerInteraction
 {
     private InGameManager InGameManager;
 
+    [Header("POSTable Settings")]
     [SerializeField] private Vector3[] startPos;
     [SerializeField] private float zStep;
-
+    [SerializeField] private GetMoneyArea getMoneyArea;
+    public GetMoneyArea GetMoneyArea => getMoneyArea;
+    
     private bool inside = true;
 
     private void Start()
@@ -33,7 +36,7 @@ public class POSTable : OnTriggerInteraction
             CustomerController customer = InGameManager.PeekCustomer(InGameManager.CHECKOUT_INDEX);
 
             if(customer == null) continue;
-            if(customer.CurrentState is CustomerWaitingCheckoutState == false) continue;
+            if(!customer.CurrentState is CustomerWaitingState) continue;
             if(InGameManager.CheckingOut) continue;
               
             
