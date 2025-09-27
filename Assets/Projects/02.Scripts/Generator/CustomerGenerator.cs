@@ -5,29 +5,35 @@ using UnityEngine;
 public class CustomerGenerator : MonoBehaviour
 {
     private InGameManager InGameManager;
-    
-    [Header("CustomerGenerator Settings")]
-    [SerializeField] private Customer customerPrefab;
+
+    [Header("CustomerGenerator Settings")] [SerializeField]
+    private Customer customerPrefab;
+
     [SerializeField] private int initialSize = 10;
     public GenericPool<Customer> CustomerPool { get; private set; }
 
     private int count;
-    
-    private IEnumerator Start()
+
+    private void Start()
     {
         InGameManager = InGameManager.Instance;
-        
+
         CustomerPool = new GenericPool<Customer>(customerPrefab, initialSize, transform);
 
-        for (int i = 0; i < 3; i++)
-        {
-            Generate();
-            yield return new WaitForSeconds(1f);
-        }
+        StartCoroutine(GenerateCoroutine());
     }
 
-    public void Generate()
+    private IEnumerator GenerateCoroutine()
     {
-        CustomerPool.Get(transform.position, Quaternion.identity).gameObject.SetActive(true);
+        WaitForSeconds wfs = new WaitForSeconds(0.5f);
+
+        while (gameObject.activeSelf)
+        {
+            yield return wfs;
+            
+            if (!InGameManager.CustomerChecker()) continue;
+
+            CustomerPool.Get(transform.position, Quaternion.identity).gameObject.SetActive(true);
+        }
     }
 }

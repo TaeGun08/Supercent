@@ -1094,7 +1094,6 @@ MonoBehaviour:
   breadGenerator: {fileID: 228567027}
   moneyGenerator: {fileID: 59239681}
   waitingCustomerSize: 3
-  maxBreadWaiting: 2
   maxCheckOutWaiting: 5
   maxEatingWaiting: 2
 --- !u!1 &1801973348

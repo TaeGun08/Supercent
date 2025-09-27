@@ -34,7 +34,6 @@ public class InGameManager : SingletonBehaviour<InGameManager>
 
     [Space] [Header("Customer Info")] 
     [SerializeField] private int waitingCustomerSize;
-    [SerializeField] private int maxBreadWaiting;
     [SerializeField] private int maxCheckOutWaiting;
     [SerializeField] private int maxEatingWaiting;
     
@@ -68,9 +67,9 @@ public class InGameManager : SingletonBehaviour<InGameManager>
         GetWaitingQueue(index).Enqueue(customer);
     }
 
-    public CustomerController DequeueCustomer(int index)
+    private void DequeueCustomer(int index)
     {
-        return GetWaitingQueue(index).Dequeue();
+        GetWaitingQueue(index).Dequeue();
     }
 
     public CustomerController PeekCustomer(int index)
@@ -98,13 +97,6 @@ public class InGameManager : SingletonBehaviour<InGameManager>
         nextCustomer?.ChangeState<T>();
     }
 
-    public void MaxCustomerCheckAndGenerate()
-    {
-         if (WaitingCustomers[BREAD_INDEX].Count >= maxBreadWaiting 
-             || WaitingCustomers[CHECKOUT_INDEX].Count >= maxCheckOutWaiting) return;
-         CustomerGenerator.Generate();
-    }
-
     public void ArrangeWaitingLine(int index)
     {
         var queue = GetWaitingQueue(index);
@@ -116,5 +108,10 @@ public class InGameManager : SingletonBehaviour<InGameManager>
             customer.Agent.SetDestination(position);
             count++;
         }
+    }
+
+    public bool CustomerChecker()
+    {
+        return basketTable.SlotCheck() && GetQueueCount(CHECKOUT_INDEX) < maxCheckOutWaiting;
     }
 }

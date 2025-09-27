@@ -51,18 +51,12 @@ public class BasketTable : OnTriggerInteraction
         inside = false;
 
         if (Breads.Count <= 0) return;
-
-        ///첫시작
+        
         var customer = InGameManager.Instance.PeekCustomer(InGameManager.BREAD_INDEX);
         if (customer != null && customer.CurrentState is CustomerWaitingBreadState)
         {
             customer.ChangeState<CustomerPickingBreadState>();
         }
-        
-        // if (customer != null && customer.CurrentState is CustomerWaitingBreadState)
-        // {
-        //     customer.ChangeState<CustomerPickingBreadState>();
-        // }
     }
 
     public Transform GetAvailableSlot()
@@ -86,7 +80,6 @@ public class BasketTable : OnTriggerInteraction
             if (targetPos[i] == slot)
             {
                 slotOccupied[i] = false;
-                InGameManager.Instance.MaxCustomerCheckAndGenerate();
                 break;
             }
         }
@@ -96,7 +89,7 @@ public class BasketTable : OnTriggerInteraction
     {
         foreach (var slot in slotOccupied)
         {
-            if (slot) return true;
+            if (!slot) return true;
         }
         
         return false;

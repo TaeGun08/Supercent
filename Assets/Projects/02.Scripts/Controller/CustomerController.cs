@@ -41,13 +41,17 @@ public class CustomerController : MonoBehaviour
         {
             state.Initialize(context);
         }
-        
-        currentState = states[0];
     }
 
     private void OnEnable()
     {
+        currentState = states[0];
         currentState?.StateEnter();
+    }
+
+    private void OnDisable()
+    {
+        currentState = null;
     }
 
     private void Update()
