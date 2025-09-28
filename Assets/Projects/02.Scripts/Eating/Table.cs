@@ -17,7 +17,9 @@ public class Table : OnTriggerInteraction
     public Transform SitTrs => sitTrs;
     [Space] 
     [SerializeField] private GameObject trashPrefab;
+    [SerializeField] private ParticleSystem cleanVfx;
     private bool isDirty;
+    [Space]
     [SerializeField] private GetMoneyArea getMoneyArea;
 
     private bool inside;
@@ -76,7 +78,8 @@ public class Table : OnTriggerInteraction
             if (!isDirty) continue;
 
             trashPrefab.SetActive(false);
-            animTarget.SetRotateAnimation(new Vector3(0f, 180f, 0f), 0f);
+            cleanVfx.Play();
+            animTarget.SetRotateAnimation(new Vector3(0f, 180f, 0f), 0.5f);
             isDirty = false;
 
             CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
