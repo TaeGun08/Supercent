@@ -1231,6 +1231,30 @@ PrefabInstance:
       propertyPath: breadGenerator
       value: 
       objectReference: {fileID: 228567027}
+    - target: {fileID: 1539143179065655678, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539143179065655678, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539143179065655678, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738812503227646190, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738812503227646190, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738812503227646190, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.49
+      objectReference: {fileID: 0}
     - target: {fileID: 6468859744991597206, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1278,6 +1302,10 @@ PrefabInstance:
     - target: {fileID: 6468859744991597207, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
       propertyPath: m_Name
       value: Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468859745843036018, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}

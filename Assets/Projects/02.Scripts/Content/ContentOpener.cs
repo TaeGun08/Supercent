@@ -33,7 +33,7 @@ public class ContentOpener : OnTriggerInteraction
 
     private IEnumerator OpenContentCoroutine(Collider other)
     {
-        WaitForSeconds wfs = new WaitForSeconds(0.1f);
+        WaitForSeconds wfs = new WaitForSeconds(0.05f);
         
         Player player = other.GetComponent<Player>();
         

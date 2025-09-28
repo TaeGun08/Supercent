@@ -36,16 +36,18 @@ public class POSTable : OnTriggerInteraction
             CustomerController customer = InGameManager.PeekCustomer(InGameManager.CHECKOUT_INDEX);
 
             if(customer == null) continue;
-            if(!customer.CurrentState is CustomerWaitingState) continue;
+            if(customer.Agent.pathPending || customer.Agent.remainingDistance > customer.Agent.stoppingDistance) continue;
             if(InGameManager.CheckingOut) continue;
-              
             
             InGameManager.CheckingOut = true;
-                
-            yield return new WaitForSeconds(0.25f);
-            InGameManager.PaperBagGenerator.Generate();
-                
-            yield return new WaitForSeconds(0.3f);
+
+            if (InGameManager.PaperBagGenerator.PaperBag == null)
+            {
+                yield return new WaitForSeconds(0.25f);
+                InGameManager.PaperBagGenerator.Generate();
+                yield return new WaitForSeconds(0.3f);
+            }
+            
             customer.ChangeState<CustomerCheckingOutState>();
         }
 

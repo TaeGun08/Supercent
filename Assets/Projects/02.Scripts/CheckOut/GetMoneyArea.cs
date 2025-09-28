@@ -21,7 +21,7 @@ public class GetMoneyArea : OnTriggerInteraction
     
     private IEnumerator PickupBreadCoroutine(Collider other)
     {
-        WaitForSeconds wait = new WaitForSeconds(0.1f);
+        WaitForSeconds wait = new WaitForSeconds(0.05f);
         
         Player player = other.GetComponent<Player>();
         

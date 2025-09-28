@@ -14,6 +14,7 @@ public class Table : OnTriggerInteraction
     [SerializeField] private Transform putDownTrs;
     public Transform PutDownTrs => putDownTrs;
     [SerializeField] private Transform sitTrs;
+    public Transform SitTrs => sitTrs;
     [Space] 
     [SerializeField] private GameObject trashPrefab;
     private bool isDirty;
@@ -31,36 +32,9 @@ public class Table : OnTriggerInteraction
     {
         CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
         currentEatingCustomer = customer == null ? null : customer.Customer;
-        OnTableCustomerMove();
-    }
-
-    private IEnumerator OnTableCustomerMoveCoroutine()
-    {
-        if (isDirty) yield break;
-
-        currentEatingCustomer.SitTable = this;
-
-        NavMeshAgent agent = currentEatingCustomer.Agent;
-        agent.SetDestination(sitTrs.position);
-        InGameManager.Instance.NextStep<CustomerWaitingState>(InGameManager.EATING_INDEX);
-        InGameManager.Instance.ArrangeWaitingLine(InGameManager.EATING_INDEX);
-
-        yield return null;
-
-        WaitForSeconds wfs = new WaitForSeconds(0.1f);
-
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
-        {
-            yield return wfs;
-        }
-
-        currentEatingCustomer.CustomerController.ChangeState<CustomerEatingState>();
-    }
-
-    public void OnTableCustomerMove()
-    {
         if (currentEatingCustomer == null) return;
-        StartCoroutine(OnTableCustomerMoveCoroutine());
+        currentEatingCustomer.SitTable = this;
+        currentEatingCustomer.CustomerController.ChangeState<CustomerGoingToEatState>();
     }
 
     protected override void TriggerEnter(Collider other)
@@ -85,7 +59,8 @@ public class Table : OnTriggerInteraction
             CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
             if (customer == null) break;
             currentEatingCustomer = customer.Customer;
-            OnTableCustomerMove();
+            currentEatingCustomer.SitTable = this;
+            currentEatingCustomer.CustomerController.ChangeState<CustomerGoingToEatState>();
         }
     }
 
@@ -105,12 +80,17 @@ public class Table : OnTriggerInteraction
         return currentEatingCustomer == null;
     }
 
+    public bool IsSeatAvailable()
+    {
+        return currentEatingCustomer && !isDirty && InGameManager.Instance.EatingHole.gameObject.activeSelf;
+    }
+
     public void FinishEating()
     {
         isDirty = true;
+        currentEatingCustomer = null;
         trashPrefab.SetActive(true);
         animTarget.RotateAnimation();
-        currentEatingCustomer = null;
         InGameManager.Instance.MoneyGenerator.Generate(10, getMoneyArea);
     }
 }

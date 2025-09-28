@@ -23,7 +23,7 @@ public class CustomerCheckingOutState : CustomerStateBase
 
         if (Customer.BreadStack.Count <= 0)
         {
-            if (timer >= 1f)
+            if (timer >= 0.5f)
             {
                 CheckOut();
             }
