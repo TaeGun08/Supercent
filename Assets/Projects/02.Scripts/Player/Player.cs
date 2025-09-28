@@ -17,12 +17,12 @@ public class Player : BreadHandler
     [Header("PlayerStatus Settings")]
     [SerializeField] private PlayerStatus playerStatus;
     public PlayerStatus PlayerStatus => playerStatus;
-
-    public int HasMoney { get; set; } = 99999;
+    public int HasMoney { get; set; }
 
     private void Start()
     {
         InGameManager = InGameManager.Instance;
+        InGameManager.BreadMaxUI.SetTarget(this, new Vector3(0f, 5.5f, 0f));
     }
 
     public Money Pay()

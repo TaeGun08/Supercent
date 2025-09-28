@@ -51,6 +51,12 @@ public class InGameManager : SingletonBehaviour<InGameManager>
         new List<Queue<CustomerController>>();
     
     public bool CheckingOut { get; set; }
+    
+    [Space]
+    [Header("UI Settings")]
+    [SerializeField] private BreadMaxUI breadMaxUI;
+    public BreadMaxUI BreadMaxUI => breadMaxUI;
+    //[SerializeField] private 
 
     protected override void Awake()
     {

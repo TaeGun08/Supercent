@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private static readonly int MOVE = Animator.StringToHash("Move");
+    private static readonly int IS_STACK = Animator.StringToHash("IsStack");
     private Player player;
     private CharacterController characterController;
+    private Animator animator;
 
     private JoyStickController joyStickController;
 
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         player = GetComponent<Player>();
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -31,14 +35,15 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        MovementAndRotation();
-        Gravity();
+        UpdateMovementAndRotation();
+        UpdateGravity();
+        UpdateAnimation();
     }
 
     /// <summary>
     /// 조이스틱 입력에 따른 이동 및 회전 처리
     /// </summary>
-    private void MovementAndRotation()
+    private void UpdateMovementAndRotation()
     {
         Vector2 inputVec = joyStickController.DragDirection();
         
@@ -68,7 +73,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// 중력 적용 함수
     /// </summary>
-    private void Gravity()
+    private void UpdateGravity()
     {
         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + 0.1f, groundMask);
 
@@ -79,5 +84,15 @@ public class PlayerController : MonoBehaviour
 
         velocityY += player.PlayerStatus.Gravity * Time.deltaTime;
         characterController.Move(Vector3.up * (velocityY * Time.deltaTime));
+    }
+
+    private void UpdateAnimation()
+    {
+        Vector2 inputVec = joyStickController.DragDirection();
+        inputVec.Normalize();
+
+        animator.SetInteger(MOVE, inputVec == Vector2.zero ? 0 : 1);
+        
+        animator.SetBool(IS_STACK, player.BreadStack.Count > 0);
     }
 }

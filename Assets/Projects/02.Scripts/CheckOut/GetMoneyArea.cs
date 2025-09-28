@@ -32,7 +32,7 @@ public class GetMoneyArea : OnTriggerInteraction
             if (moneyStack.Count <= 0) continue;
 
             Money money = moneyStack.Pop();
-            money.SetCurveMovement(other.transform, other.transform.position.y + 0.5f, 0f, 5f, transform);
+            money.SetCurveMovement(other.transform, 0f, 0f, 5f, transform);
             player.HasMoney++;
         }
     }
