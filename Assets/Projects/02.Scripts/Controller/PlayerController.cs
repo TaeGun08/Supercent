@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         player = GetComponent<Player>();
         characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -86,12 +86,15 @@ public class PlayerController : MonoBehaviour
         characterController.Move(Vector3.up * (velocityY * Time.deltaTime));
     }
 
+    /// <summary>
+    /// 애니메이션 갱신 함수
+    /// </summary>
     private void UpdateAnimation()
     {
         Vector2 inputVec = joyStickController.DragDirection();
         inputVec.Normalize();
 
-        animator.SetInteger(MOVE, inputVec == Vector2.zero ? 0 : 1);
+        animator.SetFloat(MOVE, inputVec == Vector2.zero ? 0 : 1);
         
         animator.SetBool(IS_STACK, player.BreadStack.Count > 0);
     }
