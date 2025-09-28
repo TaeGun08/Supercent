@@ -6,7 +6,9 @@ public class CustomerLeavingState : CustomerStateBase
 {
     public override void StateEnter()
     {
-        Agent.SetDestination(InGameManager.CustomerGenerator.transform.position);
+        Animator.SetFloat(MOVE, 1);
+        Customer.PlayEmoji();
+        Agent.SetDestination(new Vector3(2.4f, 0.5f, 12f));
     }
     
     public override void OnUpdate()

@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paperBagPrefab: {fileID: -2976720605955370113, guid: 63606f9a81a8b4642b2e18f27e151c38, type: 3}
-  initialSize: 10
+  initialSize: 2
   paperBagTrs: {fileID: 1251194023}
 --- !u!1 &1484974232
 GameObject:
@@ -1517,6 +1517,10 @@ PrefabInstance:
       propertyPath: breadGenerator
       value: 
       objectReference: {fileID: 228567027}
+    - target: {fileID: 768299816125687203, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
+      propertyPath: moneyCost
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6468859744991597206, guid: 9a3de529da0b2f741a1fb49ceab03867, type: 3}
       propertyPath: m_RootOrder
       value: 3

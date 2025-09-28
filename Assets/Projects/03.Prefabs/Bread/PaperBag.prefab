@@ -166,7 +166,7 @@ Animator:
   m_GameObject: {fileID: 4426021078506112199}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ed594ab4bb10a042916ce7f842f8805, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -218,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.5
+  paperBagCloseBoneTrs: {fileID: 7536433116996264676}
 --- !u!1 &6023975171121396742
 GameObject:
   m_ObjectHideFlags: 0

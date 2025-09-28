@@ -38,6 +38,7 @@ public class CustomerEatingState : CustomerStateBase
             yield return wfs;
         }
         
+        Animator.SetBool(IS_STACK, false);
         yield return new WaitForSeconds(3f);
 
         int count = eatingBread.Count;

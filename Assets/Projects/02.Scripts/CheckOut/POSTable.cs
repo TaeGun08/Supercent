@@ -43,7 +43,6 @@ public class POSTable : OnTriggerInteraction
 
             if (InGameManager.PaperBagGenerator.PaperBag == null)
             {
-                yield return new WaitForSeconds(0.25f);
                 InGameManager.PaperBagGenerator.Generate();
                 yield return new WaitForSeconds(0.3f);
             }

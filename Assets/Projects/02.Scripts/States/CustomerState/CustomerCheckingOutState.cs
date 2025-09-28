@@ -5,6 +5,7 @@ using UnityEngine;
 public class CustomerCheckingOutState : CustomerStateBase
 {
     private float timer;
+    private bool checkingOut;
 
     public override void StateEnter()
     {
@@ -23,9 +24,9 @@ public class CustomerCheckingOutState : CustomerStateBase
 
         if (Customer.BreadStack.Count <= 0)
         {
-            if (timer >= 0.5f)
+            if (timer >= 0.5f && !checkingOut)
             {
-                CheckOut();
+                StartCoroutine(CheckOut());
             }
 
             return;
@@ -37,11 +38,20 @@ public class CustomerCheckingOutState : CustomerStateBase
         }
     }
 
-    private void CheckOut()
+    private IEnumerator CheckOut()
     {
+        checkingOut = true;
+        
         Customer.GetIconBubble.Release();
         
         Customer.GetPaperBag = InGameManager.PaperBagGenerator.PaperBag;
+        
+        Customer.GetPaperBag.CloseAnimationPlay();
+
+        yield return null;
+        
+        yield return new WaitForSeconds(1f);
+        
         Customer.GetPaperBag.SetCurveMovement(Customer.HandTrs, 0f, 0f, 5f, Customer.HandTrs);
         
         InGameManager.MoneyGenerator.Generate(10, InGameManager.POSTable.GetMoneyArea);
@@ -53,6 +63,8 @@ public class CustomerCheckingOutState : CustomerStateBase
         
         InGameManager.NextStep<CustomerCheckingOutState>(InGameManager.CHECKOUT_INDEX);
         InGameManager.ArrangeWaitingLine(InGameManager.CHECKOUT_INDEX);
+
+        checkingOut = false;
     }
 
     private void PackagingBread()

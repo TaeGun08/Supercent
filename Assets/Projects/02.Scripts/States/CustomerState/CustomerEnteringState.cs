@@ -16,6 +16,8 @@ public class CustomerEnteringState : CustomerStateBase
         Transform trs = InGameManager.Instance.BasketTable.GetAvailableSlot();
         Customer.MoveTargetTrs = trs;
 
+        Animator.SetFloat(MOVE, 1);
+        
         Agent.SetDestination(centerPoint.position);
     }
 
@@ -36,6 +38,7 @@ public class CustomerEnteringState : CustomerStateBase
             Customer.GetIconBubble.SetTarget(Controller.transform, new Vector3(0, 3f, 0));
             Customer.GetIconBubble.UpdateBreadIcon(Customer.PickingBreadCount);
             
+            Animator.SetFloat(MOVE, 0);
             Quaternion targetRot = Quaternion.LookRotation(Customer.MoveTargetTrs.forward);
             Controller.transform.DORotate(targetRot.eulerAngles, 0.3f);
             Controller.ChangeState<CustomerPickingBreadState>();

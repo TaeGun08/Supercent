@@ -30,6 +30,7 @@ public class CustomerPickingBreadState : CustomerStateBase
         if (timer < 0.1f) return;
         timer = 0;
         
+        Animator.SetBool(IS_STACK, true);
         Customer.PickupBread(InGameManager.BasketTable.PickUp());
         Customer.GetIconBubble.UpdateBreadIcon(Customer.PickingBreadCount - Customer.BreadStack.Count);
     }

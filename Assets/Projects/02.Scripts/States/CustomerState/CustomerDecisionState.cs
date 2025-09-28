@@ -17,6 +17,9 @@ public class CustomerDecisionState : CustomerStateBase
     {
         if (Agent.pathPending || Agent.remainingDistance > Agent.stoppingDistance) return;
 
+        if (decision == InGameManager.EATING_INDEX) Customer.GetIconBubble.UpdateEatIcon();
+        
+        Animator.SetFloat(MOVE, 0);
         Quaternion targetRot = Quaternion.LookRotation(-Vector3.forward);
         Controller.transform.DORotate(targetRot.eulerAngles, 0.3f);
         Controller.ChangeState<CustomerWaitingState>();
@@ -36,6 +39,7 @@ public class CustomerDecisionState : CustomerStateBase
                 break;
         }
 
+        Animator.SetFloat(MOVE, 1);
         Going();
     }
 
@@ -47,20 +51,21 @@ public class CustomerDecisionState : CustomerStateBase
 
         InGameManager.EnqueueCustomer(decision, Controller);
 
+        Customer.GetIconBubble.UpdatePOSIcon();
+        
         switch (decision)
         {
             case InGameManager.CHECKOUT_INDEX:
-                Customer.GetIconBubble.UpdatePOSIcon();
                 Agent.SetDestination(pos);
                 break;
             case InGameManager.EATING_INDEX:
-                Customer.GetIconBubble.UpdateEatIcon();
                 
                 InGameManager.EatingHole.SetCustomerEmptyTable(Customer);
 
                 Agent.SetDestination(pos);
 
                 if (Customer.SitTable == null || !Customer.SitTable.IsSeatAvailable()) break;
+                Customer.GetIconBubble.UpdateEatIcon();
                 Controller.ChangeState<CustomerGoingToEatState>();
                 break;
         }

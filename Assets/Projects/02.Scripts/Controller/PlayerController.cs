@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private static readonly int MOVE = Animator.StringToHash("Move");
     private static readonly int IS_STACK = Animator.StringToHash("IsStack");
+    
     private Player player;
     private CharacterController characterController;
     private Animator animator;

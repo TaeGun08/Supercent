@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public abstract class CustomerStateBase : MonoBehaviour
 {
+    protected static readonly int MOVE = Animator.StringToHash("Move");
+    protected static readonly int IS_STACK = Animator.StringToHash("IsStack");
+    
     public Customer Customer { get; private set; }
     public CustomerController Controller { get; private set; }
     public Animator Animator { get; private set; }
