@@ -22,6 +22,7 @@ public class Customer : BreadHandler
     public PaperBag GetPaperBag { get; set; }
 
     public Table SitTable { get; set; }
+    public IconBubble GetIconBubble { get; set; }
 
     private void Awake()
     {

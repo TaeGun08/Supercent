@@ -14,8 +14,8 @@ public class CustomerLeavingState : CustomerStateBase
         if (Agent.pathPending || Agent.remainingDistance > Agent.stoppingDistance) return;
         
         Customer.gameObject.SetActive(false);
-        Customer.GetPaperBag?.gameObject.SetActive(false);
-        InGameManager.CustomerGenerator.CustomerPool.Return(Customer);
+        Customer.GetPaperBag?.Return();
+        InGameManager.CustomerGenerator.Return(Customer);
     }
 
     public override void StateExit()

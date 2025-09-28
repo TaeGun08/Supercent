@@ -39,6 +39,8 @@ public class CustomerCheckingOutState : CustomerStateBase
 
     private void CheckOut()
     {
+        Customer.GetIconBubble.Release();
+        
         Customer.GetPaperBag = InGameManager.PaperBagGenerator.PaperBag;
         Customer.GetPaperBag.SetCurveMovement(Customer.HandTrs, 0f, 0f, 5f, Customer.HandTrs);
         

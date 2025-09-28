@@ -10,7 +10,7 @@ public class CustomerGenerator : MonoBehaviour
     private Customer customerPrefab;
 
     [SerializeField] private int initialSize = 10;
-    public GenericPool<Customer> CustomerPool { get; private set; }
+    private GenericPool<Customer> customerPool;
 
     private int count;
 
@@ -18,7 +18,7 @@ public class CustomerGenerator : MonoBehaviour
     {
         InGameManager = InGameManager.Instance;
 
-        CustomerPool = new GenericPool<Customer>(customerPrefab, initialSize, transform);
+        customerPool = new GenericPool<Customer>(customerPrefab, initialSize, transform);
 
         StartCoroutine(GenerateCoroutine());
     }
@@ -33,7 +33,12 @@ public class CustomerGenerator : MonoBehaviour
             
             if (!InGameManager.MaxBasketSlotAndMaxCheckOutWaiting()) continue;
 
-            CustomerPool.Get(transform.position, Quaternion.identity).gameObject.SetActive(true);
+            customerPool.Get(transform.position, Quaternion.identity).gameObject.SetActive(true);
         }
+    }
+
+    public void Return(Customer customer)
+    {
+        customerPool.Return(customer);
     }
 }

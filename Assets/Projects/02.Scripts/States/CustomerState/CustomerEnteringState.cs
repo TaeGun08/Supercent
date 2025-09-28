@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CustomerEnteringState : CustomerStateBase
@@ -30,6 +31,13 @@ public class CustomerEnteringState : CustomerStateBase
         else
         {
             InGameManager.EnqueueCustomer(InGameManager.BREAD_INDEX, Controller);
+            
+            Customer.GetIconBubble = InGameManager.IconBubbleGenerator.GetGenerate();
+            Customer.GetIconBubble.SetTarget(Controller.transform, new Vector3(0, 3f, 0));
+            Customer.GetIconBubble.UpdateBreadIcon(Customer.PickingBreadCount);
+            
+            Quaternion targetRot = Quaternion.LookRotation(Customer.MoveTargetTrs.forward);
+            Controller.transform.DORotate(targetRot.eulerAngles, 0.3f);
             Controller.ChangeState<CustomerPickingBreadState>();
         }
     }

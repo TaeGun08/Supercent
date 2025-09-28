@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CustomerDecisionState : CustomerStateBase
@@ -16,6 +17,8 @@ public class CustomerDecisionState : CustomerStateBase
     {
         if (Agent.pathPending || Agent.remainingDistance > Agent.stoppingDistance) return;
 
+        Quaternion targetRot = Quaternion.LookRotation(-Vector3.forward);
+        Controller.transform.DORotate(targetRot.eulerAngles, 0.3f);
         Controller.ChangeState<CustomerWaitingState>();
     }
 
@@ -47,10 +50,12 @@ public class CustomerDecisionState : CustomerStateBase
         switch (decision)
         {
             case InGameManager.CHECKOUT_INDEX:
+                Customer.GetIconBubble.UpdatePOSIcon();
                 Agent.SetDestination(pos);
                 break;
             case InGameManager.EATING_INDEX:
-
+                Customer.GetIconBubble.UpdateEatIcon();
+                
                 InGameManager.EatingHole.SetCustomerEmptyTable(Customer);
 
                 Agent.SetDestination(pos);

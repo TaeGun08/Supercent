@@ -31,6 +31,7 @@ public class CustomerPickingBreadState : CustomerStateBase
         timer = 0;
         
         Customer.PickupBread(InGameManager.BasketTable.PickUp());
+        Customer.GetIconBubble.UpdateBreadIcon(Customer.PickingBreadCount - Customer.BreadStack.Count);
     }
 
     private bool CheckFullStack()

@@ -7,6 +7,6 @@ public class Money : DOCurveMovement
     protected override void ResetTransform()
     {
         gameObject.SetActive(false);
-        InGameManager.Instance.MoneyGenerator.MoneyPool.Return(this);
+        InGameManager.Instance.MoneyGenerator.Return(this);
     }
 }

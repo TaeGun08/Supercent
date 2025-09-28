@@ -13,11 +13,11 @@ public class BreadGenerator : MonoBehaviour
     [SerializeField] private float bakeDuration;
 
     public Queue<Bread> BakeBreads { get; private set; } = new Queue<Bread>();
-    public GenericPool<Bread> BreadPool { get; private set; }
+    private GenericPool<Bread> breadPool;
     
     private void Awake()
     {
-        BreadPool = new GenericPool<Bread>(breadPrefab, initialSize, transform);
+        breadPool = new GenericPool<Bread>(breadPrefab, initialSize, transform);
 
         StartCoroutine(BakeBreadCoroutine());
     }
@@ -31,9 +31,14 @@ public class BreadGenerator : MonoBehaviour
             yield return wait;
             
             if (BakeBreads.Count >= maxBake) continue;
-            Bread bread = BreadPool.Get(bakeTransform.position, Quaternion.identity);
+            Bread bread = breadPool.Get(bakeTransform.position, Quaternion.identity);
             bread.BakeBread();
             BakeBreads.Enqueue(bread);
         }
+    }
+
+    public void Return(Bread bread)
+    {
+        breadPool.Return(bread);
     }
 }

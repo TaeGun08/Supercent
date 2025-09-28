@@ -38,6 +38,8 @@ public class InGameManager : SingletonBehaviour<InGameManager>
     public BreadGenerator BreadGenerator => breadGenerator;
     [SerializeField] private MoneyGenerator moneyGenerator;
     public MoneyGenerator MoneyGenerator => moneyGenerator;
+    [SerializeField] private IconBubbleGenerator iconBubbleGenerator;
+    public IconBubbleGenerator IconBubbleGenerator => iconBubbleGenerator;
 
     [Space] 
     [Header("Customer Info")] 

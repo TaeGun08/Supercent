@@ -30,11 +30,23 @@ public class Table : OnTriggerInteraction
 
     private void OnEnable()
     {
-        CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
-        currentEatingCustomer = customer == null ? null : customer.Customer;
-        if (currentEatingCustomer == null) return;
-        currentEatingCustomer.SitTable = this;
-        currentEatingCustomer.CustomerController.ChangeState<CustomerGoingToEatState>();
+        StartCoroutine(OnEnableSeatAvailableCoroutine());
+    }
+
+    private IEnumerator OnEnableSeatAvailableCoroutine()
+    {
+        WaitForSeconds wfs = new WaitForSeconds(1f);
+        while (gameObject.activeSelf)
+        {
+            yield return wfs;
+            
+            CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
+            currentEatingCustomer = customer == null ? null : customer.Customer;
+            
+            if (currentEatingCustomer == null) continue;
+            currentEatingCustomer.SitTable = this;
+            currentEatingCustomer.CustomerController.ChangeState<CustomerGoingToEatState>();
+        }
     }
 
     protected override void TriggerEnter(Collider other)

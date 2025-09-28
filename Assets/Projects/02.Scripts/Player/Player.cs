@@ -28,6 +28,6 @@ public class Player : BreadHandler
     public Money Pay()
     {
         HasMoney--;
-        return InGameManager.MoneyGenerator.MoneyPool.Get(transform.position, Quaternion.identity);
+        return InGameManager.MoneyGenerator.GetGenerateMoney(transform);
     }
 }

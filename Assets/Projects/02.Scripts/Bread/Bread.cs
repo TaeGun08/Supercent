@@ -16,7 +16,7 @@ public class Bread : DOCurveMovement
         base.ResetVector();
         
         if (gameObject.activeSelf) return;
-        InGameManager.Instance.BreadGenerator.BreadPool.Return(this);
+        InGameManager.Instance.BreadGenerator.Return(this);
     }
 
     
