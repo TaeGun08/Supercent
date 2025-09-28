@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class JoyStickController : MonoBehaviour
 {
@@ -19,6 +20,14 @@ public class JoyStickController : MonoBehaviour
     private Vector3 startPos;
     private Vector3 dragDirection;
 
+    [Space] 
+    [SerializeField] private GameObject firstTouchObj;
+    [SerializeField] private float size;
+    [SerializeField] private float angleSpeed = 2f;
+    [SerializeField] private RectTransform targetRect;
+    
+    private bool firstTouch;
+    
     private void Start()
     {
         followCamera = Camera.main.GetComponent<FollowCamera>();
@@ -26,6 +35,8 @@ public class JoyStickController : MonoBehaviour
 
     private void Update()
     {
+        StartAngle();
+        
         if (followCamera.CamMovement)
         {
             EndStick();
@@ -41,12 +52,29 @@ public class JoyStickController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
             EndStick();
     }
+
+    private void StartAngle()
+    {
+        if (firstTouch) return;
+        
+        float t = Time.time * angleSpeed;
+        float x = size * Mathf.Sin(t);
+        float y = size * Mathf.Sin(t) * Mathf.Cos(t);
+
+        targetRect.anchoredPosition = new Vector2(x, y);
+    }
     
     /// <summary>
     /// 클릭을 시작했을 때
     /// </summary>
     private void StartStick()
     {
+        if (!firstTouch)
+        {
+            firstTouch = true;
+            firstTouchObj.SetActive(false);
+        }
+        
         startPos = Input.mousePosition;
         background.gameObject.SetActive(true);
 
