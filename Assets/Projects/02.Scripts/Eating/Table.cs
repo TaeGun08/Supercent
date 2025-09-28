@@ -18,7 +18,6 @@ public class Table : OnTriggerInteraction
     [Space] 
     [SerializeField] private GameObject trashPrefab;
     private bool isDirty;
-    public bool IsDirty => isDirty;
     [SerializeField] private GetMoneyArea getMoneyArea;
 
     private bool inside;
@@ -39,13 +38,25 @@ public class Table : OnTriggerInteraction
         while (gameObject.activeSelf)
         {
             yield return wfs;
+
+            if (isDirty) continue;
             
-            CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
-            currentEatingCustomer = customer == null ? null : customer.Customer;
-            
-            if (currentEatingCustomer == null) continue;
-            currentEatingCustomer.SitTable = this;
-            currentEatingCustomer.CustomerController.ChangeState<CustomerGoingToEatState>();
+            if (currentEatingCustomer != null 
+                && currentEatingCustomer.Controller.CurrentState is CustomerWaitingState)
+            {
+
+                currentEatingCustomer.SitTable = this;
+                currentEatingCustomer.Controller.ChangeState<CustomerGoingToEatState>();
+            }
+            else if (currentEatingCustomer == null)
+            {
+                CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
+                currentEatingCustomer = customer == null ? null : customer.Customer;
+                
+                if (currentEatingCustomer == null || currentEatingCustomer.Controller.CurrentState is not CustomerWaitingState) continue;
+                currentEatingCustomer.SitTable = this;
+                currentEatingCustomer.Controller.ChangeState<CustomerGoingToEatState>();
+            }
         }
     }
 
@@ -65,14 +76,14 @@ public class Table : OnTriggerInteraction
             if (!isDirty) continue;
 
             trashPrefab.SetActive(false);
-            animTarget.SetRotateAnimation(Vector3.zero, 0f);
+            animTarget.SetRotateAnimation(new Vector3(0f, 180f, 0f), 0f);
             isDirty = false;
 
             CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
             if (customer == null) break;
             currentEatingCustomer = customer.Customer;
             currentEatingCustomer.SitTable = this;
-            currentEatingCustomer.CustomerController.ChangeState<CustomerGoingToEatState>();
+            currentEatingCustomer.Controller.ChangeState<CustomerGoingToEatState>();
         }
     }
 

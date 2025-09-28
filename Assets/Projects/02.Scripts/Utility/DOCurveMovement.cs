@@ -74,22 +74,14 @@ public abstract class DOCurveMovement : MonoBehaviour
     /// <param name="yStep"></param>
     /// <param name="rotate"></param>
     /// <param name="parent"></param>
-    public virtual void SetCurveMovement(Vector3 targetPos, float yStep, float rotate, Transform parent, bool active)
+    public virtual void SetCurveMovement(Vector3 targetPos, float hegiht, float rotate, Transform parent, bool active)
     {
         rigid.isKinematic = true;
         coll.isTrigger = true;
 
         transform.SetParent(parent);
-
-        Vector3 peakPos = new Vector3(
-            targetPos.x,
-            yStep,
-            targetPos.z
-        );
-
-        Vector3[] path = new Vector3[] { transform.position, peakPos, targetPos };
-
-        transform.DOJump(targetPos, yStep, 1, duration)
+        
+        transform.DOJump(targetPos, hegiht, 1, duration)
             .SetEase(Ease.OutCubic)
             .OnComplete(() =>
             {

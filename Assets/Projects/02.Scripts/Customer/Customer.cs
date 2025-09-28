@@ -8,7 +8,7 @@ public class Customer : BreadHandler
     private InGameManager InGameManager;
     
     public NavMeshAgent Agent { get; private set; }
-    public CustomerController CustomerController { get; private set; }
+    public CustomerController Controller { get; private set; }
 
     [Header("Customer Settings")] [SerializeField]
     private int breadMaxCount;
@@ -27,7 +27,7 @@ public class Customer : BreadHandler
     private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
-        CustomerController = GetComponent<CustomerController>();
+        Controller = GetComponent<CustomerController>();
     }
 
     private void Start()
