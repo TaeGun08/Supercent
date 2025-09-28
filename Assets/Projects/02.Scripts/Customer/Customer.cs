@@ -39,15 +39,10 @@ public class Customer : BreadHandler
         PickingBreadCount = Random.Range(1, breadMaxCount + 1);
     }
 
-    public void GoingEatingTable(Transform target)
-    {
-        Agent.SetDestination(target.position);
-        InGameManager.ArrangeWaitingLine(InGameManager.EATING_INDEX);
-    }
-
     public void Reset()
     {
         MoveTargetTrs = null;
         GetPaperBag = null;
+        SitTable = null;
     }
 }

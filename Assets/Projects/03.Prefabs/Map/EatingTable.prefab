@@ -76,7 +76,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &4017625108990488917
 MonoBehaviour:
@@ -93,9 +93,9 @@ MonoBehaviour:
   plane: {fileID: 0}
   planeScaleSize: 0
   moneyTrs: {fileID: 4134774873419939447}
-  xStep: 0.3
+  xStep: 0.75
   yStep: 0.05
-  zStep: -0.5
+  zStep: -0.45
 --- !u!1 &5095443408577283268
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5095443408577283268}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: -0.4, z: 1}
+  m_LocalPosition: {x: -1.68, y: -0.4, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -167,6 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8692526767734654281}
+  - component: {fileID: 3049562273705711783}
   - component: {fileID: 8692526767734654280}
   m_Layer: 0
   m_Name: EatingTable
@@ -196,6 +197,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3049562273705711783
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8692526767734654294}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 1, z: 3}
+  m_Center: {x: 0, y: 0.6, z: -0.5}
 --- !u!114 &8692526767734654280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +291,33 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5b33a025f2ac114eb63655463f0ed5b, type: 3}
   m_PrefabInstance: {fileID: 2406064181902268127}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3289148841132977038 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d5b33a025f2ac114eb63655463f0ed5b, type: 3}
+  m_PrefabInstance: {fileID: 2406064181902268127}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3319473408231087997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3289148841132977038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 161c6376a986d1b49adc1aac882e807c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateDuration: 0
+  rotateX: 0
+  rotateY: 0
+  rotateZ: 0
+  scaleDuration: 0.2
+  scaleX: 1
+  scaleY: 1
+  scaleZ: 1
+  onEnableRotateAnimPlay: 0
+  onEnableScaleAnimPlay: 1
 --- !u!1001 &2406064183135179437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -420,6 +461,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 86df9cdd47e61e948800e0eb59d16d62, type: 3}
       propertyPath: m_Name
       value: Trash
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 86df9cdd47e61e948800e0eb59d16d62, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86df9cdd47e61e948800e0eb59d16d62, type: 3}

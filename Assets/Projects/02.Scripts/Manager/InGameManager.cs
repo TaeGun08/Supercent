@@ -65,7 +65,7 @@ public class InGameManager : SingletonBehaviour<InGameManager>
         return WaitingCustomers[index];
     }
 
-    private void DequeueCustomer(int index)
+    public void DequeueCustomer(int index)
     {
         GetWaitingQueue(index).Dequeue();
     }
@@ -108,6 +108,8 @@ public class InGameManager : SingletonBehaviour<InGameManager>
     public void ArrangeWaitingLine(int index)
     {
         var queue = GetWaitingQueue(index);
+        
+        if (queue.Count == 0) return;
         
         int count = 0;
         foreach (var customer in queue)

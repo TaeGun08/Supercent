@@ -19,7 +19,9 @@ public class MoneyGenerator : MonoBehaviour
     {
         for (int i = 0; i < generate; i++)
         {
-            getMoneyArea.PushMoney(MoneyPool.Get(transform.position, Quaternion.identity));
+            Money money = MoneyPool.Get(transform.position, Quaternion.Euler(0f, 90f, 0f));
+            money.gameObject.SetActive(true);
+            getMoneyArea.PushMoney(money);
         }
     }
 }

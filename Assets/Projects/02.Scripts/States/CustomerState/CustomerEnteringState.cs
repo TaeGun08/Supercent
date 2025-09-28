@@ -20,7 +20,7 @@ public class CustomerEnteringState : CustomerStateBase
 
     public override void OnUpdate()
     {
-        if (Agent.pathPending || !(Agent.remainingDistance <= Agent.stoppingDistance)) return;
+        if (Agent.pathPending || Agent.remainingDistance > Agent.stoppingDistance) return;
 
         if (!reachedCenter)
         {

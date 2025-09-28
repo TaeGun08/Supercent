@@ -20,15 +20,17 @@ public class CustomerController : MonoBehaviour
     public CustomerStateBase CurrentState => currentState;
     private CustomerStateBase[] states;
 
+    public Customer Customer { get; private set; }
     public NavMeshAgent Agent { get; private set; }
 
     private void Awake()
     {
+        Customer = GetComponent<Customer>();
         Agent = GetComponent<NavMeshAgent>();
         
         var context = new CustomerContext()
         {
-            Customer = GetComponent<Customer>(),
+            Customer = this.Customer,
             Controller = this,
             Animator = GetComponentInChildren<Animator>(),
             Rigidbody = GetComponent<Rigidbody>(),

@@ -12,6 +12,7 @@ public class EatingHole : MonoBehaviour
         {
             if (!table.EatingCustomerEmpty() || !table.gameObject.activeSelf) continue;
             table.SetCustomer(customer);
+            break;
         }
     }
 }

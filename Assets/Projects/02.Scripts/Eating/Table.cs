@@ -7,66 +7,85 @@ using UnityEngine.Serialization;
 
 public class Table : OnTriggerInteraction
 {
-    private InGameManager InGameManager;
-
     private Customer currentEatingCustomer;
 
-    [Header("Table Settings")] [SerializeField]
-    private DOAnimation animTarget;
-
+    [Header("Table Settings")] 
+    [SerializeField] private DOAnimation animTarget;
     [SerializeField] private Transform putDownTrs;
     public Transform PutDownTrs => putDownTrs;
     [SerializeField] private Transform sitTrs;
-    public Transform SitTrs => sitTrs;
-    [Space] [SerializeField] private GameObject trashPrefab;
+    [Space] 
+    [SerializeField] private GameObject trashPrefab;
     private bool isDirty;
+    public bool IsDirty => isDirty;
     [SerializeField] private GetMoneyArea getMoneyArea;
 
     private bool inside;
 
     private void Start()
     {
-        InGameManager = InGameManager.Instance;
-
         trashPrefab.SetActive(false);
     }
 
     private void OnEnable()
     {
-        StartCoroutine(OnTableCustomerMoveCoroutine());
+        CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
+        currentEatingCustomer = customer == null ? null : customer.Customer;
+        OnTableCustomerMove();
     }
 
     private IEnumerator OnTableCustomerMoveCoroutine()
     {
-        currentEatingCustomer?.GoingEatingTable(sitTrs);
-        NavMeshAgent agent = currentEatingCustomer?.Agent;
-        WaitForSeconds wfs = new WaitForSeconds(1f);
+        if (isDirty) yield break;
 
-        while (agent != null && (agent.pathPending || agent.remainingDistance > agent.stoppingDistance))
+        currentEatingCustomer.SitTable = this;
+
+        NavMeshAgent agent = currentEatingCustomer.Agent;
+        agent.SetDestination(sitTrs.position);
+        InGameManager.Instance.NextStep<CustomerWaitingState>(InGameManager.EATING_INDEX);
+        InGameManager.Instance.ArrangeWaitingLine(InGameManager.EATING_INDEX);
+
+        yield return null;
+
+        WaitForSeconds wfs = new WaitForSeconds(0.1f);
+
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
         {
             yield return wfs;
         }
 
-        currentEatingCustomer?.CustomerController.ChangeState<CustomerEatingState>();
+        currentEatingCustomer.CustomerController.ChangeState<CustomerEatingState>();
+    }
+
+    public void OnTableCustomerMove()
+    {
+        if (currentEatingCustomer == null) return;
+        StartCoroutine(OnTableCustomerMoveCoroutine());
     }
 
     protected override void TriggerEnter(Collider other)
     {
         inside = true;
-        StartCoroutine(TableEtnerCoroutine());
+        StartCoroutine(TableEnterCoroutine());
     }
 
-    private IEnumerator TableEtnerCoroutine()
+    private IEnumerator TableEnterCoroutine()
     {
         WaitForSeconds wfs = new WaitForSeconds(0.1f);
 
         while (inside)
         {
             yield return wfs;
-
             if (!isDirty) continue;
+
+            trashPrefab.SetActive(false);
             animTarget.SetRotateAnimation(Vector3.zero, 0f);
             isDirty = false;
+
+            CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
+            if (customer == null) break;
+            currentEatingCustomer = customer.Customer;
+            OnTableCustomerMove();
         }
     }
 
@@ -77,7 +96,6 @@ public class Table : OnTriggerInteraction
 
     public void SetCustomer(Customer customer)
     {
-        if (currentEatingCustomer != null) return;
         currentEatingCustomer = customer;
         currentEatingCustomer.SitTable = this;
     }
@@ -89,9 +107,10 @@ public class Table : OnTriggerInteraction
 
     public void FinishEating()
     {
-        isDirty = false;
+        isDirty = true;
         trashPrefab.SetActive(true);
-        animTarget.SetRotateAnimation(new Vector3(0f, 130f, 0f), 0f); 
-        InGameManager.MoneyGenerator.Generate(10, getMoneyArea);
+        animTarget.RotateAnimation();
+        currentEatingCustomer = null;
+        InGameManager.Instance.MoneyGenerator.Generate(10, getMoneyArea);
     }
 }
