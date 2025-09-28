@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class POSTable : OnTriggerInteraction
+public class POSTable : OnTriggerInteraction, ITutorial
 {
     private InGameManager InGameManager;
 
@@ -13,6 +13,9 @@ public class POSTable : OnTriggerInteraction
     public GetMoneyArea GetMoneyArea => getMoneyArea;
     
     private bool inside = true;
+    
+    public Tutorial Tutorial => Tutorial.POSTable;
+    public Tutorial NextTutorial => Tutorial.ContentA;
 
     private void Start()
     {
@@ -21,6 +24,7 @@ public class POSTable : OnTriggerInteraction
 
     protected override void TriggerEnter(Collider other)
     {
+        TutorialManager.Instance.SetPoints(Tutorial, NextTutorial);
         inside = true;
         StartCoroutine(CheckOutCoroutine());
     }

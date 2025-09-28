@@ -18,6 +18,12 @@ public class ContentOpener : OnTriggerInteraction
     [SerializeField] private TMP_Text moneyText;
     
     private bool inside;
+    
+    [SerializeField] private Tutorial tutorial;
+    [SerializeField] private Tutorial nextTutorial;
+    
+    public Tutorial Tutorial => tutorial;
+    public Tutorial NextTutorial => nextTutorial;
 
     private void Awake()
     {
@@ -41,7 +47,7 @@ public class ContentOpener : OnTriggerInteraction
         {
             yield return wfs;
             
-            if(player.HasMoney <= 0) continue;
+            if(player.GetHasMoney() <= 0) continue;
             Money money = player.Pay();
             money.SetCurveMovement(transform, transform.position.y, 0f, 5f, transform);
             currentMoneyCost--;
@@ -49,6 +55,8 @@ public class ContentOpener : OnTriggerInteraction
         }
 
         if (currentMoneyCost > 0) yield break;
+        AudioManager.Instance.ContentsOpenSound();
+        TutorialManager.Instance.SetPoints(Tutorial, NextTutorial);
         OpenContents();
         ActivateFalseObjects();
     }

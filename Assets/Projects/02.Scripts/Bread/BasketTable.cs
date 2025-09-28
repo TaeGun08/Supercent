@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasketTable : OnTriggerInteraction
+public class BasketTable : OnTriggerInteraction, ITutorial
 {
+    private AudioManager AudioManager;
+    
     public Stack<Bread> Breads { get; private set; } = new Stack<Bread>();
 
-    [Space] [Header("BasketTable Settings")] [SerializeField]
-    private Vector3 startPos;
-
+    [Space] [Header("BasketTable Settings")] 
+    [SerializeField] private Transform breadTargetPos;
     [SerializeField] private float xStep = 0.5f;
     [SerializeField] private float zStep = -1f;
     [SerializeField] private float yStep = 0.5f;
@@ -19,14 +20,24 @@ public class BasketTable : OnTriggerInteraction
     private bool[] slotOccupied;
 
     private bool inside = true;
+    
+    public Tutorial Tutorial => Tutorial.BasketTable;
+    public Tutorial NextTutorial => Tutorial.POSTable;
 
     private void Awake()
     {
         slotOccupied = new bool[targetPos.Length];
     }
 
+    private void Start()
+    {
+        AudioManager = AudioManager.Instance;
+    }
+
     protected override void TriggerEnter(Collider other)
     {
+        TutorialManager.Instance.SetPoints(Tutorial, NextTutorial);
+        
         if (Breads.Count >= maxBread) return;
 
         inside = true;
@@ -42,6 +53,7 @@ public class BasketTable : OnTriggerInteraction
         {
             yield return wait;
             if (breadHandler.BreadStack.Count <= 0) continue;
+            AudioManager.BreadPutDownSound();
             PutDown(breadHandler.GetBread());
         }
     }
@@ -99,14 +111,14 @@ public class BasketTable : OnTriggerInteraction
     {
         int count = Breads.Count;
 
-        int perRow = 3;
-        int perLayer = 6;
+        int perRow = 2;
+        int perLayer = 8;
 
         int layer = count / perLayer;
         int rowInLayer = (count % perLayer) / perRow;
         int colInRow = count % perRow;
 
-        Vector3 pos = startPos;
+        Vector3 pos = breadTargetPos.position;
         pos.x += colInRow * xStep;
         pos.z += rowInLayer * zStep;
         pos.y += layer * yStep;

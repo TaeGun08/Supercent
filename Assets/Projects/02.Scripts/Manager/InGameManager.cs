@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class InGameManager : SingletonBehaviour<InGameManager>
@@ -56,7 +57,7 @@ public class InGameManager : SingletonBehaviour<InGameManager>
     [Header("UI Settings")]
     [SerializeField] private BreadMaxUI breadMaxUI;
     public BreadMaxUI BreadMaxUI => breadMaxUI;
-    //[SerializeField] private 
+    [SerializeField] private TMP_Text hasMoneyText;
 
     protected override void Awake()
     {
@@ -136,5 +137,10 @@ public class InGameManager : SingletonBehaviour<InGameManager>
     public bool MaxEatingWaiting()
     {
         return GetQueueCount(EATING_INDEX) < maxEatingWaiting;
+    }
+
+    public void UpdateHasMoneyText(int hasMoney)
+    {
+        hasMoneyText.text = hasMoney.ToString();
     }
 }

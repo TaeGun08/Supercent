@@ -12,22 +12,33 @@ public class PlayerStatus
 
 public class Player : BreadHandler
 {
-    private InGameManager InGameManager;
-    
     [Header("PlayerStatus Settings")]
     [SerializeField] private PlayerStatus playerStatus;
     public PlayerStatus PlayerStatus => playerStatus;
-    public int HasMoney { get; set; }
+    private int hasMoney;
 
-    private void Start()
+    protected override void Start()
     {
-        InGameManager = InGameManager.Instance;
+        base.Start();
         InGameManager.BreadMaxUI.SetTarget(this, new Vector3(0f, 5.5f, 0f));
+    }
+
+    public void SetHasMoney()
+    {
+        hasMoney++;
+        AudioManager.MoneySound();
+        InGameManager.UpdateHasMoneyText(hasMoney);
+    }
+
+    public int GetHasMoney()
+    {
+        return hasMoney;
     }
 
     public Money Pay()
     {
-        HasMoney--;
+        hasMoney--;
+        InGameManager.UpdateHasMoneyText(hasMoney);
         return InGameManager.MoneyGenerator.GetGenerateMoney(transform);
     }
 }

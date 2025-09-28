@@ -22,6 +22,6 @@ public class Bread : DOCurveMovement
     
     public void BakeBread()
     {
-        rigid.AddForce(-Vector3.forward * 4f, ForceMode.Impulse);
+        rigid.AddForce(-Vector3.forward * 7f, ForceMode.Impulse);
     }
 }

@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 
 public class Table : OnTriggerInteraction
 {
+    private AudioManager AudioManager;
+    
     private Customer currentEatingCustomer;
 
     [Header("Table Settings")] 
@@ -26,6 +28,8 @@ public class Table : OnTriggerInteraction
 
     private void Start()
     {
+        AudioManager = AudioManager.Instance;
+        
         trashPrefab.SetActive(false);
     }
 
@@ -81,6 +85,7 @@ public class Table : OnTriggerInteraction
             cleanVfx.Play();
             animTarget.SetRotateAnimation(new Vector3(0f, 180f, 0f), 0.5f);
             isDirty = false;
+            AudioManager.TrashSound();
 
             CustomerController customer = InGameManager.Instance.PeekCustomer(InGameManager.EATING_INDEX);
             if (customer == null) break;

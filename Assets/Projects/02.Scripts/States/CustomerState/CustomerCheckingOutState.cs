@@ -10,6 +10,7 @@ public class CustomerCheckingOutState : CustomerStateBase
     public override void StateEnter()
     {
         timer = 0f;
+        Animator.SetFloat(MOVE, 0);
     }
 
     public override void OnUpdate()
@@ -64,6 +65,8 @@ public class CustomerCheckingOutState : CustomerStateBase
         InGameManager.NextStep<CustomerCheckingOutState>(InGameManager.CHECKOUT_INDEX);
         InGameManager.ArrangeWaitingLine(InGameManager.CHECKOUT_INDEX);
 
+        AudioManager.Instance.CheckOutSound();
+        
         checkingOut = false;
     }
 

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class JoyStickController : MonoBehaviour
 {
+    private FollowCamera followCamera;
+    
     [Header("JoyController")]
     [SerializeField] private RectTransform background;  
     [SerializeField] private RectTransform handle;      
@@ -17,8 +19,19 @@ public class JoyStickController : MonoBehaviour
     private Vector3 startPos;
     private Vector3 dragDirection;
 
+    private void Start()
+    {
+        followCamera = Camera.main.GetComponent<FollowCamera>();
+    }
+
     private void Update()
     {
+        if (followCamera.CamMovement)
+        {
+            EndStick();
+            return;
+        }
+        
         if (Input.GetMouseButtonDown(0))
             StartStick();
 

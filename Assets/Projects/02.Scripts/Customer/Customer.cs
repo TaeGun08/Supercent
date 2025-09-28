@@ -5,8 +5,6 @@ using Random = UnityEngine.Random;
 
 public class Customer : BreadHandler
 {
-    private InGameManager InGameManager;
-    
     public NavMeshAgent Agent { get; private set; }
     public CustomerController Controller { get; private set; }
 
@@ -28,11 +26,6 @@ public class Customer : BreadHandler
     {
         Agent = GetComponent<NavMeshAgent>();
         Controller = GetComponent<CustomerController>();
-    }
-
-    private void Start()
-    {
-        InGameManager = InGameManager.Instance;
     }
 
     private void OnEnable()
